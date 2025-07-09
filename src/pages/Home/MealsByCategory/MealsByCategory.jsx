@@ -8,25 +8,25 @@ const MealsByCategory = () => {
       <div className="mb-8 border-b border-black/20">
         <div className="flex justify-center -mb-px space-x-6 sm:space-x-8">
           <button
-            className="cursor-pointer py-3 px-1 border-b-2 border-primary-500 text-primary-500 text-sm font-bold"
+            className="cursor-pointer py-3 px-1 border-b-2 border-primary text-primary text-sm font-bold"
             href="#"
           >
             All Meals
           </button>
           <button
-            className="cursor-pointer py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-primary-500 hover:border-primary-500 transition-colors text-sm font-medium"
+            className="cursor-pointer py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-primary hover:border-primary transition-colors text-sm font-medium"
             href="#"
           >
             Breakfast
           </button>
           <button
-            className="cursor-pointer py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-primary-500 hover:border-primary-500 transition-colors text-sm font-medium"
+            className="cursor-pointer py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-primary hover:border-primary transition-colors text-sm font-medium"
             href="#"
           >
             Lunch
           </button>
           <button
-            className="cursor-pointer py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-primary-500 hover:border-primary-500 transition-colors text-sm font-medium"
+            className="cursor-pointer py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-primary hover:border-primary transition-colors text-sm font-medium"
             href="#"
           >
             Dinner
@@ -61,7 +61,7 @@ const MealsByCategory = () => {
               bread.
             </p>
             <div className="flex justify-between items-center">
-              <p className="text-lg font-bold text-primary-500">$8.50</p>
+              <p className="text-lg font-bold text-primary">$8.50</p>
               <Link
                 className="text-sm font-semibold text-primary hover:bg-primary/15 px-5 py-2 transition-colors cursor-pointer rounded-full"
                 href="#"
@@ -92,9 +92,9 @@ const MealsByCategory = () => {
               vinaigrette.
             </p>
             <div className="flex justify-between items-center">
-              <p className="text-lg font-bold text-primary-500">$12.00</p>
+              <p className="text-lg font-bold text-primary">$12.00</p>
               <button
-                className="text-sm font-semibold text-primary-500 hover:text-primary-600 transition-colors"
+                className="text-sm font-semibold text-primary hover:text-primary-600 transition-colors"
                 href="#"
               >
                 View Details
@@ -123,9 +123,9 @@ const MealsByCategory = () => {
               bread.
             </p>
             <div className="flex justify-between items-center">
-              <p className="text-lg font-bold text-primary-500">$15.00</p>
+              <p className="text-lg font-bold text-primary">$15.00</p>
               <button
-                className="text-sm font-semibold text-primary-500 hover:text-primary-600 transition-colors"
+                className="text-sm font-semibold text-primary hover:text-primary-600 transition-colors"
                 href="#"
               >
                 View Details

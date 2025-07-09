@@ -7,7 +7,7 @@ const RootLayout = () => {
   return (
     <>
       <Header />
-      <main className='max-w-7xl mx-auto font-poppins'>
+      <main className='max-w-7xl xl:mx-auto mx-3 font-poppins'>
         <Outlet />
       </main>
       <Footer />
