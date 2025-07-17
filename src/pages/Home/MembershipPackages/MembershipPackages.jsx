@@ -35,7 +35,7 @@ const packages = [
 
 const MembershipPackages = () => {
   return (
-    <section className="py-12 bg-base-100">
+    <section className="py-12 bg-base-100 mb-20">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <h2 className="text-3xl font-poppins font-bold mb-4">
           Upgrade Your Membership

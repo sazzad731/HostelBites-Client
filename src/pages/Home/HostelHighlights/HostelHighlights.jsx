@@ -2,7 +2,7 @@ import React from 'react';
 
 const HostelHighlights = () => {
   return (
-    <section className="py-10 sm:py-24 bg-primary/10 rounded-2xl">
+    <section className="py-10 sm:py-24 bg-primary/10 rounded-2xl mb-20">
       <div className="text-center mb-12 sm:px-0 px-2">
         <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
           Hostel Highlights
