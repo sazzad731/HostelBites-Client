@@ -23,11 +23,10 @@ const StarRating = ({ maxStars = 5, initialRating = 0, onChange }) => {
             onMouseEnter={() => setHover(value)}
             onMouseLeave={() => setHover(null)}
             className="focus:outline-none"
-            disabled
           >
             <FaStar
-              className={`h-6 w-6 transition-colors cursor-not-allowed ${
-                value <= (hover || rating) ? "text-yellow-400" : "text-gray-300"
+              className={`h-6 w-6 transition-colors cursor-pointer ${
+                value <= (hover || rating) ? "text-primary" : "text-gray-300"
               }`}
             />
           </button>

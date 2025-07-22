@@ -85,7 +85,7 @@ const Header = () => {
         </button>
 
         {!user.isLoggedIn ? (
-          <Link to="/join-us" className="btn btn-primary">
+          <Link to="/login" className="btn btn-primary">
             Join Us
           </Link>
         ) : (
