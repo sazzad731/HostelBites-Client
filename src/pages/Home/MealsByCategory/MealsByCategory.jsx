@@ -4,6 +4,7 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
+import StaticRating from '../../../components/StarRating/StaticRating';
 
 const MealsByCategory = () => {
   const [category, setCategory] = useState("")
@@ -15,8 +16,6 @@ const MealsByCategory = () => {
       return res.data
     }
   })
-
-  console.log(meals)
   
 
   return (
@@ -89,16 +88,7 @@ const MealsByCategory = () => {
                   {meal.title}
                 </h3>
                 <div className="flex items-center mb-2 text-sm text-primary">
-                  <div className="flex gap-1">
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaStar />
-                    <FaRegStar />
-                  </div>
-                  <span className="ml-2">
-                    {meal.rating} ({meal.reviews.length})
-                  </span>
+                  <StaticRating rating={meal?.rating}/>
                 </div>
                 <p className="text-slate-600 text-sm mb-4">
                   {meal.description}
