@@ -4,7 +4,8 @@ import { formatDistance } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
-import StaticRating from "../../components/StarRating/StaticRating";
+import Rating from "react-rating";
+import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 
 
 const MealDetail = () => {
@@ -62,7 +63,13 @@ const MealDetail = () => {
               </p>
               <div className="flex items-center gap-2">
                 <h4 className="font-semibold">
-                  <StaticRating rating={meal?.rating}/>
+                  <Rating
+                    emptySymbol={<FaRegStar className="text-primary" size={20}/>}
+                    fullSymbol={<FaStarHalfAlt className="text-primary" size={20}/>}
+                    placeholderSymbol={<FaStar className="text-primary" size={20}/>}
+                    placeholderRating={meal?.rating}
+                    readonly
+                  />
                 </h4>
                 <p className="text-lg font-bold">({meal?.rating})</p>
               </div>

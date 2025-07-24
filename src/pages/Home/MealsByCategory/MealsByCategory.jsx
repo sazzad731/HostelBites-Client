@@ -4,7 +4,7 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
-import StaticRating from '../../../components/StarRating/StaticRating';
+import Rating from 'react-rating';
 
 const MealsByCategory = () => {
   const [category, setCategory] = useState("")
@@ -88,7 +88,13 @@ const MealsByCategory = () => {
                   {meal.title}
                 </h3>
                 <div className="flex items-center mb-2 text-sm text-primary">
-                  <StaticRating rating={meal?.rating}/>
+                  <Rating
+                    emptySymbol={<FaRegStar className="text-primary" size={18}/>}
+                    fullSymbol={<FaStarHalfAlt className="text-primary" size={18}/>}
+                    placeholderSymbol={<FaStar className="text-primary" size={18}/>}
+                    placeholderRating={meal?.rating}
+                    readonly
+                  />
                 </div>
                 <p className="text-slate-600 text-sm mb-4">
                   {meal.description}

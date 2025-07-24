@@ -1,10 +1,66 @@
 import React from 'react';
 import { MdEmail, MdLock } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import AuthButtons from '../../components/AuthButtons/AuthButtons';
+import useAuth from '../../hooks/useAuth';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import useAxiosSecure from "../../hooks/useAxiosSecure"
 
 const Register = () => {
+  const { createUser, updateUserProfile } = useAuth();
+  const axiosSecure = useAxiosSecure()
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  
+  const onSubmit = (data)=>{
+    createUser(data.email, data.password)
+    .then((result)=>{
+      updateUserProfile({ displayName: data.name})
+      .then(()=>{
+        const userInfo = {
+          name: result.user.displayName,
+          email: result.user.email,
+          role: "student",
+          badge: "Bronze"
+        };
+        axiosSecure.post('/users', userInfo)
+          .then((res) => {
+            if(res.data.insertedId){
+              Swal.fire({
+                title: "Account Created Successful",
+                icon: "success",
+              });
+              navigate("/")
+            }
+          }).catch(err => {
+            Swal.fire({
+              title: err.response.data.message,
+              icon: "error"
+            });
+          })
+      }).catch(err=>{
+        Swal.fire({
+          title: err.message,
+          text: err,
+          icon: "error"
+        })
+      })
+    }).catch(err=>{
+      Swal.fire({
+        title: err.message,
+        text: err,
+        icon: "error",
+      });
+    })
+  }
+
   return (
     <div className="flex flex-1 items-center justify-center py-12">
       <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-2xl shadow-primary-200/50">
@@ -16,9 +72,12 @@ const Register = () => {
             Register to manage your hostel bookings.
           </p>
         </div>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700" for="name">
+            <label
+              className="text-sm font-medium text-slate-700"
+              htmlFor="name"
+            >
               Name
             </label>
             <div className="relative">
@@ -29,12 +88,20 @@ const Register = () => {
                 className="w-full rounded-lg border border-slate-300 bg-slate-50 py-3 pl-12 pr-4 text-slate-800 placeholder-slate-400 transition duration-150 ease-in-out focus:outline-primary focus:border-primary focus:ring-primary"
                 id="name"
                 placeholder="Type you'r name"
-                type="name"
+                {...register("name", { required: true })}
               />
+              {errors.name && (
+                <span className="text-red-500 text-sm">
+                  This field is required
+                </span>
+              )}
             </div>
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700" for="email">
+            <label
+              className="text-sm font-medium text-slate-700"
+              htmlFor="email"
+            >
               Email
             </label>
             <div className="relative">
@@ -45,15 +112,20 @@ const Register = () => {
                 className="w-full rounded-lg border border-slate-300 bg-slate-50 py-3 pl-12 pr-4 text-slate-800 placeholder-slate-400 transition duration-150 ease-in-out focus:outline-primary focus:border-primary focus:ring-primary"
                 id="email"
                 placeholder="you@example.com"
-                type="email"
+                {...register("email", { required: true })}
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">
+                  This field is required
+                </span>
+              )}
             </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <label
                 className="text-sm font-medium text-slate-700"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -66,8 +138,13 @@ const Register = () => {
                 className="w-full rounded-lg border border-slate-300 bg-slate-50 py-3 pl-12 pr-4 text-slate-800 placeholder-slate-400 transition duration-150 ease-in-out focus:outline-primary focus:border-primary focus:ring-primary"
                 id="password"
                 placeholder="••••••••"
-                type="password"
+                {...register("password", { required: true })}
               />
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  This field is required
+                </span>
+              )}
             </div>
           </div>
           <div>

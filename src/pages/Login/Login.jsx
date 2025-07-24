@@ -17,7 +17,7 @@ const Login = () => {
         </div>
         <form className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700" for="email">
+            <label className="text-sm font-medium text-slate-700" htmlFor="email">
               Email
             </label>
             <div className="relative">
@@ -36,7 +36,7 @@ const Login = () => {
             <div className="flex items-center justify-between">
               <label
                 className="text-sm font-medium text-slate-700"
-                for="password"
+                htmlFor="password"
               >
                 Password
               </label>
