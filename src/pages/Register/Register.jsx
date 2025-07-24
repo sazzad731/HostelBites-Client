@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdEmail, MdLock } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import AuthButtons from '../../components/AuthButtons/AuthButtons';
 import useAuth from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
@@ -12,6 +12,7 @@ const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
   const axiosSecure = useAxiosSecure()
   const navigate = useNavigate();
+  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -37,7 +38,7 @@ const Register = () => {
                 title: "Account Created Successful",
                 icon: "success",
               });
-              navigate("/")
+              navigate(location.state || "/")
             }
           }).catch(err => {
             Swal.fire({
@@ -90,12 +91,12 @@ const Register = () => {
                 placeholder="Type you'r name"
                 {...register("name", { required: true })}
               />
+            </div>
               {errors.name && (
                 <span className="text-red-500 text-sm">
                   This field is required
                 </span>
               )}
-            </div>
           </div>
           <div className="space-y-2">
             <label
@@ -114,12 +115,12 @@ const Register = () => {
                 placeholder="you@example.com"
                 {...register("email", { required: true })}
               />
+            </div>
               {errors.email && (
                 <span className="text-red-500 text-sm">
                   This field is required
                 </span>
               )}
-            </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -140,12 +141,12 @@ const Register = () => {
                 placeholder="••••••••"
                 {...register("password", { required: true })}
               />
+            </div>
               {errors.password && (
                 <span className="text-red-500 text-sm">
                   This field is required
                 </span>
               )}
-            </div>
           </div>
           <div>
             <button

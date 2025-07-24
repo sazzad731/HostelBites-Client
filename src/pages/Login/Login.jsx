@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdEmail, MdLock } from "react-icons/md";
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import AuthButtons from '../../components/AuthButtons/AuthButtons';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 const Login = () => {
   const { logIn} = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const onSubmit = (data)=>{
     logIn(data.email, data.password)
@@ -18,6 +20,7 @@ const Login = () => {
           text: "You login successfully",
           icon: "success",
         });
+        navigate(location.state || "/")
       })
       .catch(err =>{
         Swal.fire({
@@ -57,12 +60,12 @@ const Login = () => {
                 placeholder="you@example.com"
                 {...register("email", { required: true })}
               />
+            </div>
               {errors.email && (
                 <span className="text-red-500 text-sm">
                   This field is required
                 </span>
               )}
-            </div>
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
@@ -89,12 +92,12 @@ const Login = () => {
                 placeholder="••••••••"
                 {...register("password", { required: true })}
               />
+            </div>
               {errors.password && (
                 <span className="text-red-500 text-sm">
                   This field is required
                 </span>
               )}
-            </div>
           </div>
           <div>
             <button
@@ -118,7 +121,7 @@ const Login = () => {
         <AuthButtons />
         <p className="text-center text-sm text-slate-600">
           Don't have an account?
-          <Link to="/register" className="font-medium text-primary">
+          <Link to="/register" state={location.state} className="font-medium text-primary">
             {" "}
             Register here
           </Link>

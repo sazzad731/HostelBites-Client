@@ -26,16 +26,34 @@ const AuthButtons = () => {
         axiosSecure.post("/users", userInfo)
           .then((res) => {
             if (res.data.insertedId) {
+              if(location.pathname === "/login"){
+                Swal.fire({
+                  title: "Welcome back",
+                  text: "You login successfully",
+                  icon: "success",
+                });
+                navigate(location.state || "/")
+              }
               if (location.pathname === "/register") {
                 Swal.fire({
                   title: "Account Created Successful",
                   icon: "success",
                 });
-                navigate("/");
+                navigate(location.state || "/");
               }
             }
           }).catch((err) => {
             console.log(err)
+            if (location.pathname === "/register" || location.pathname === '/login') {
+              if(err.status === 400){
+                Swal.fire({
+                  title: "Welcome back",
+                  text: "You login successfully",
+                  icon: "success",
+                });
+                navigate(location.state || "/");
+              }
+            }
           });
       })
       .catch((error) => {
