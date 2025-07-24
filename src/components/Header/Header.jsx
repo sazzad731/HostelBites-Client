@@ -1,13 +1,34 @@
 import React from 'react';
 import { Link, NavLink } from "react-router";
 import Logo from '../Logo/Logo';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const Header = () => {
-  const user = {
-    isLoggedIn: false,
-    username: "john_doe",
-    profilePic: "https://i.pravatar.cc/40",
+  const { user, logOut } = useAuth();
+
+
+  const handleLogOut = () =>{
+    logOut()
+      .then(() => {
+        Swal.fire({
+          title: "Log out successful",
+          text: "You successfully log out",
+          icon: "success"
+        })
+      })
+      .catch(err =>
+      {
+        Swal.fire({
+          title: err.message,
+          icon: "error"
+        })
+      });
   };
+
+
+
+
 
   // ✅ Navigation links in one array
   const navItems = (
@@ -53,12 +74,14 @@ const Header = () => {
             {navItems}
           </ul>
         </div>
-        <Logo/>
+        <Logo />
       </div>
 
       {/* Center */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-lg font-medium">{navItems}</ul>
+        <ul className="menu menu-horizontal px-1 text-lg font-medium">
+          {navItems}
+        </ul>
       </div>
 
       {/* End */}
@@ -84,7 +107,7 @@ const Header = () => {
           </div>
         </button>
 
-        {!user.isLoggedIn ? (
+        {!user ? (
           <Link to="/login" className="btn btn-primary">
             Join Us
           </Link>
@@ -92,7 +115,14 @@ const Header = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={user.profilePic} alt="Profile" />
+                {user?.photoURL ? (
+                  <img src={user.photoURL} alt="Profile" />
+                ) : (
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                    alt="Profile"
+                  />
+                )}
               </div>
             </label>
             <ul
@@ -100,13 +130,13 @@ const Header = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>
-                <span className="font-bold">{user.username}</span>
+                <span className="font-bold">{user.displayName}</span>
               </li>
               <li>
                 <Link to="/dashboard">Dashboard</Link>
               </li>
               <li>
-                <button>Logout</button>
+                <button onClick={handleLogOut}>Logout</button>
               </li>
             </ul>
           </div>
