@@ -4,10 +4,14 @@ import { FaFacebook } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router";
 
 const AuthButtons = () => {
   const { signInWithGoogle } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const location = useLocation()
+
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
@@ -22,10 +26,13 @@ const AuthButtons = () => {
         axiosSecure.post("/users", userInfo)
           .then((res) => {
             if (res.data.insertedId) {
-              Swal.fire({
-                title: "Account Created Successful",
-                icon: "success",
-              });
+              if (location.pathname === "/register") {
+                Swal.fire({
+                  title: "Account Created Successful",
+                  icon: "success",
+                });
+                navigate("/");
+              }
             }
           }).catch((err) => {
             console.log(err)

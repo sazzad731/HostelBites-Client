@@ -2,8 +2,32 @@ import React from 'react';
 import { MdEmail, MdLock } from "react-icons/md";
 import { Link } from 'react-router';
 import AuthButtons from '../../components/AuthButtons/AuthButtons';
+import { useForm } from 'react-hook-form';
+import useAuth from '../../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+  const { logIn} = useAuth();
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (data)=>{
+    logIn(data.email, data.password)
+      .then(() =>{
+        Swal.fire({
+          title: "Welcome back",
+          text: "You login successfully",
+          icon: "success",
+        });
+      })
+      .catch(err =>{
+        Swal.fire({
+          title: err.message,
+          text: err,
+          icon: "error"
+        })
+      })
+  }
+
   return (
     <div className="flex flex-1 items-center justify-center py-12">
       <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-2xl shadow-primary-200/50">
@@ -15,9 +39,12 @@ const Login = () => {
             Login to manage your hostel bookings.
           </p>
         </div>
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-            <label className="text-sm font-medium text-slate-700" htmlFor="email">
+            <label
+              className="text-sm font-medium text-slate-700"
+              htmlFor="email"
+            >
               Email
             </label>
             <div className="relative">
@@ -28,8 +55,13 @@ const Login = () => {
                 className="w-full rounded-lg border border-slate-300 bg-slate-50 py-3 pl-12 pr-4 text-slate-800 placeholder-slate-400 transition duration-150 ease-in-out focus:outline-primary focus:border-primary focus:ring-primary"
                 id="email"
                 placeholder="you@example.com"
-                type="email"
+                {...register("email", { required: true })}
               />
+              {errors.email && (
+                <span className="text-red-500 text-sm">
+                  This field is required
+                </span>
+              )}
             </div>
           </div>
           <div className="space-y-2">
@@ -55,8 +87,13 @@ const Login = () => {
                 className="w-full rounded-lg border border-slate-300 bg-slate-50 py-3 pl-12 pr-4 text-slate-800 placeholder-slate-400 transition duration-150 ease-in-out focus:outline-primary focus:border-primary focus:ring-primary"
                 id="password"
                 placeholder="••••••••"
-                type="password"
+                {...register("password", { required: true })}
               />
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  This field is required
+                </span>
+              )}
             </div>
           </div>
           <div>
@@ -78,13 +115,11 @@ const Login = () => {
             </span>
           </div>
         </div>
-        <AuthButtons/>
+        <AuthButtons />
         <p className="text-center text-sm text-slate-600">
           Don't have an account?
-          <Link
-            to="/register"
-            className="font-medium text-primary"
-          > {" "}
+          <Link to="/register" className="font-medium text-primary">
+            {" "}
             Register here
           </Link>
         </p>
