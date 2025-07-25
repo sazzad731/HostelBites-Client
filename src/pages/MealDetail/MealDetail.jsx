@@ -6,11 +6,13 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import Rating from "react-rating";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
+import { useState } from "react";
 
 
 const MealDetail = () => {
   const { id } = useParams();
   const axiosSecure = useAxiosSecure();
+  const [ like, setLike ] = useState(0);
   
   const { data: meal, isLoading } = useQuery({
     queryKey: [ 'mealDetail' ],
@@ -20,7 +22,12 @@ const MealDetail = () => {
     }
   })
 
-  console.log(meal);
+  const handleLike = async()=>{
+    const res = await axiosSecure.patch("/like", { id });
+    if (res.data.modifiedCount === 1) {
+      setLike(like + 1)
+    }
+  }
 
   return (
     <section className="sm:px-4 py-10">
@@ -64,9 +71,15 @@ const MealDetail = () => {
               <div className="flex items-center gap-2">
                 <h4 className="font-semibold">
                   <Rating
-                    emptySymbol={<FaRegStar className="text-primary" size={20}/>}
-                    fullSymbol={<FaStarHalfAlt className="text-primary" size={20}/>}
-                    placeholderSymbol={<FaStar className="text-primary" size={20}/>}
+                    emptySymbol={
+                      <FaRegStar className="text-primary" size={20} />
+                    }
+                    fullSymbol={
+                      <FaStarHalfAlt className="text-primary" size={20} />
+                    }
+                    placeholderSymbol={
+                      <FaStar className="text-primary" size={20} />
+                    }
                     placeholderRating={meal?.rating}
                     readonly
                   />
@@ -75,9 +88,12 @@ const MealDetail = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <button className="btn btn-outline btn-primary flex items-center gap-2">
+                <button
+                  onClick={handleLike}
+                  className="btn btn-outline btn-primary flex items-center gap-2"
+                >
                   <FiThumbsUp />
-                  Like
+                  Like ({meal.likes + like})
                 </button>
                 <button className="btn btn-primary">Request Meal</button>
               </div>
