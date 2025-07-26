@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { FiThumbsUp } from "react-icons/fi";
 import { formatDistance } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
@@ -7,27 +7,59 @@ import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import Rating from "react-rating";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 
 const MealDetail = () => {
   const { id } = useParams();
+  const { user } = useAuth();
+  const navigate = useNavigate()
   const axiosSecure = useAxiosSecure();
   const [ like, setLike ] = useState(0);
+  const [addedReview, setAddedReview] = useState(false)
   
   const { data: meal, isLoading } = useQuery({
-    queryKey: [ 'mealDetail' ],
-    queryFn: async()=>{
-      const res = await axiosSecure.get(`/meal/${id}`)
-      return res.data
-    }
-  })
+    queryKey: ["mealDetail", addedReview],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/meal/${id}`);
+      return res.data;
+    },
+  });
 
   const handleLike = async()=>{
+    if(!user){
+      return navigate("/login")
+    }
     const res = await axiosSecure.patch("/like", { id });
     if (res.data.modifiedCount === 1) {
-      setLike(like + 1)
+      setLike(like + 1);
     }
   }
+
+
+
+  const handleAddReview = async(event) => {
+    event.preventDefault();
+    const comment = event.target.comment.value;
+    if(!user) return navigate('/login')
+    const review = {
+      userName: user.displayName,
+      email: user.email,
+      img: user.photoURL,
+      comment: comment
+    }
+
+    const result = await axiosSecure.post(`/add-review?mealId=${id}`, review);
+
+    if (result.data.modifiedCount === 1) {
+      Swal.fire({
+        title: "Review added successfully",
+        icon: "success"
+      })
+      setAddedReview(true);
+    }
+  };
 
   return (
     <section className="sm:px-4 py-10">
@@ -105,12 +137,18 @@ const MealDetail = () => {
             {/* Add Review Form */}
             <div className="mb-10">
               <h4 className="font-semibold mb-2">Add Your Review</h4>
-              <textarea
-                className="textarea textarea-bordered w-full mb-4"
-                rows="4"
-                placeholder="Write your review here..."
-              ></textarea>
-              <button className="btn btn-primary">Post Review</button>
+              <form onSubmit={handleAddReview}>
+                <textarea
+                  className="textarea textarea-bordered w-full mb-4"
+                  rows="4"
+                  placeholder="Write your review here..."
+                  name="comment"
+                  required
+                ></textarea>
+                <button type="submit" className="btn btn-primary">
+                  Post Review
+                </button>
+              </form>
             </div>
 
             <h3 className="text-2xl font-poppins font-bold mb-4">
@@ -122,8 +160,10 @@ const MealDetail = () => {
 
               {meal?.reviews.map((review) => (
                 <div className="border border-gray-200 p-4 rounded-lg shadow-sm">
-                  <h4 className="font-semibold">{review?.user}</h4>
-                  <p className="text-gray-600 text-sm">{review?.timeStamp}</p>
+                  <h4 className="font-semibold">{review?.userName}</h4>
+                  <p className="text-gray-600 text-sm">
+                    Posted {formatDistance(new Date(), new Date(review?.timeStamp))}
+                  </p>
                   <p className="mt-2 font-inter">{review?.comment}</p>
                 </div>
               ))}
