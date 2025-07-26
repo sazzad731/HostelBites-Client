@@ -12,7 +12,9 @@ const MealsByCategory = () => {
   const { data: meals, isLoading } = useQuery({
     queryKey: [ 'mealsData', category ],
     queryFn: async()=>{
-      const res = await axiosSecure.get(`/meals?category=${category}`);
+      const res = await axiosSecure.get(
+        `/mealsByCategory?category=${category}`
+      );
       return res.data
     }
   })
