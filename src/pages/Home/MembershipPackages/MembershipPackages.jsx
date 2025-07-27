@@ -1,39 +1,17 @@
 import { Link } from "react-router";
 import { FiCheck } from "react-icons/fi";
-
-const packages = [
-  {
-    name: "Silver",
-    price: "$9.99",
-    services: [
-      "Access to Breakfast & Dinner meals",
-      "Basic upcoming meal access",
-      "1 meal request per week",
-    ],
-  },
-  {
-    name: "Gold",
-    price: "$19.99",
-    services: [
-      "Access to all meal categories",
-      "Priority upcoming meals",
-      "3 meal requests per week",
-      "Priority support",
-    ],
-  },
-  {
-    name: "Platinum",
-    price: "$29.99",
-    services: [
-      "Unlimited meal access",
-      "Exclusive upcoming meals",
-      "Unlimited meal requests",
-      "Premium support 24/7",
-    ],
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const MembershipPackages = () => {
+  const axiosSecure = useAxiosSecure();
+  const { data: packages } = useQuery({
+    queryKey: ["packages"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/packages");
+      return res.data;
+    },
+  });
   return (
     <section className="py-12 bg-base-100 mb-20">
       <div className="max-w-7xl mx-auto px-4 text-center">
@@ -45,7 +23,7 @@ const MembershipPackages = () => {
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {packages.map((pkg) => (
+          {packages?.map((pkg) => (
             <div
               key={pkg.name}
               className="card rounded-2xl shadow-md border border-gray-200 hover:shadow-lg transition-all py-10"
@@ -55,7 +33,7 @@ const MembershipPackages = () => {
                   {pkg.name}
                 </h3>
                 <p className="text-2xl font-bold mb-4">
-                  {pkg.price}
+                  ${pkg.price}
                   <span className="text-sm font-semibold text-slate-500">
                     /month
                   </span>
@@ -71,7 +49,7 @@ const MembershipPackages = () => {
                 </ul>
 
                 <Link
-                  to={`/checkout/${pkg.name.toLowerCase()}`}
+                  to={`/checkout/${pkg._id}`}
                   className="btn btn-primary"
                 >
                   Get {pkg.name}

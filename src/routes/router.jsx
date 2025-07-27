@@ -5,6 +5,8 @@ import MealDetail from "../pages/MealDetail/MealDetail";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Meals from "../pages/Meals/Meals";
+import PrivateRoute from "../routes/PrivateRoute"
+import Checkout from "../pages/Checkout/Checkout";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +23,10 @@ export const router = createBrowserRouter([
       {
         path: "/meal/:id",
         Component: MealDetail,
+      },
+      {
+        path: "/checkout/:id",
+        element: <PrivateRoute><Checkout/></PrivateRoute>
       },
       {
         path: "/login",
