@@ -26,10 +26,19 @@ const MembershipPackages = () => {
           {packages?.map((pkg) => (
             <div
               key={pkg.name}
-              className="card rounded-2xl shadow-md border border-gray-200 hover:shadow-lg transition-all py-10"
-            >
+              className={`card rounded-2xl shadow-md border hover:shadow-lg transition-all py-10 ${
+                pkg.name === "Silver" && "bg-slate-200 border-slate-300"
+              } ${pkg.name === "Gold" && "bg-yellow-500/10 border-yellow-300"} ${
+                pkg.name === "Platinum" && "bg-slate-300 border-slate-300"
+              }`}>
               <div className="card-body">
-                <h3 className="text-xl font-poppins font-semibold mb-2">
+                <h3
+                  className={`text-3xl ${
+                    pkg.name === "Silver" && "text-slate-400"
+                  } ${pkg.name === "Gold" && "text-yellow-500"} ${
+                    pkg.name === "Platinum" && "text-slate-600"
+                  } font-poppins font-semibold mb-2`}
+                >
                   {pkg.name}
                 </h3>
                 <p className="text-2xl font-bold mb-4">
@@ -50,7 +59,11 @@ const MembershipPackages = () => {
 
                 <Link
                   to={`/checkout/${pkg._id}`}
-                  className="btn btn-primary"
+                  className={`btn text-white ${
+                    pkg.name === "Silver" && "bg-slate-400"
+                  } ${pkg.name === "Gold" && "bg-yellow-500"} ${
+                    pkg.name === "Platinum" && "bg-slate-600"
+                  }`}
                 >
                   Get {pkg.name}
                 </Link>
