@@ -9,6 +9,7 @@ import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
+import usePurchased from "../../hooks/usePurchased";
 
 
 const MealDetail = () => {
@@ -17,7 +18,8 @@ const MealDetail = () => {
   const navigate = useNavigate()
   const axiosSecure = useAxiosSecure();
   const [ like, setLike ] = useState(0);
-  const [addedReview, setAddedReview] = useState(false)
+  const [ addedReview, setAddedReview ] = useState(false)
+  const hasSubscribed = usePurchased()
   
   const { data: meal, isLoading } = useQuery({
     queryKey: ["mealDetail", addedReview],
@@ -34,6 +36,44 @@ const MealDetail = () => {
     const res = await axiosSecure.patch("/like", { id });
     if (res.data.modifiedCount === 1) {
       setLike(like + 1);
+    }
+  }
+
+
+  const handleMealRequest = async()=>{
+    if (!user) {
+      return navigate('/login');
+    }
+    if(!hasSubscribed){
+      return navigate("/", { state: { scrollTo: "membership" } });
+    }
+    const requestedMealInfo = {
+      userEmail: user?.email,
+      mealId: id,
+      status: 'Pending'
+    };
+    try{
+      const res = await axiosSecure.post("/meal-request", requestedMealInfo);
+      if(res.data.insertedId){
+        Swal.fire({
+          title: "Meal Requested Successfully",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+      if(res.data.code === 208){
+        Swal.fire({
+          title: res.data.message,
+          icon: "error",
+        });
+      }
+    }catch(error){
+      Swal.fire({
+        title: error.message,
+        icon: "error"
+      })
+      console.log(error);
     }
   }
 
@@ -127,7 +167,9 @@ const MealDetail = () => {
                   <FiThumbsUp />
                   Like ({meal.likes + like})
                 </button>
-                <button className="btn btn-primary">Request Meal</button>
+                <button onClick={handleMealRequest} className="btn btn-primary">
+                  Request Meal
+                </button>
               </div>
             </div>
           </div>
@@ -159,10 +201,14 @@ const MealDetail = () => {
               {/* Review Item */}
 
               {meal?.reviews.map((review) => (
-                <div className="border border-gray-200 p-4 rounded-lg shadow-sm">
+                <div
+                  key={review?.timeStamp}
+                  className="border border-gray-200 p-4 rounded-lg shadow-sm"
+                >
                   <h4 className="font-semibold">{review?.userName}</h4>
                   <p className="text-gray-600 text-sm">
-                    Posted {formatDistance(new Date(), new Date(review?.timeStamp))}
+                    Posted{" "}
+                    {formatDistance(new Date(), new Date(review?.timeStamp))}
                   </p>
                   <p className="mt-2 font-inter">{review?.comment}</p>
                 </div>

@@ -7,12 +7,12 @@ const usePurchased = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const { data: alreadyPurchased } = useQuery({
-    queryKey: ["purchased"],
+    queryKey: ["purchased", user?.email],
+    enabled: !!user?.email,
     queryFn: async () => {
       const res = await axiosSecure.get(
         `/already_purchased?email=${user?.email}`
       );
-      console.log(res.data);
       return res.data;
     },
   });

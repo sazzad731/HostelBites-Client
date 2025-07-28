@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import usePurchased from "../../../hooks/usePurchased";
 
-const MembershipPackages = () => {
+const MembershipPackages = ({ membershipRef }) => {
   const alreadyPurchased = usePurchased();
   const axiosSecure = useAxiosSecure();
+  console.log(alreadyPurchased)
   const { data: packages } = useQuery({
     queryKey: ["packages"],
     queryFn: async () => {
@@ -15,7 +16,7 @@ const MembershipPackages = () => {
     },
   });
   return (
-    <section className="py-12 bg-base-100 mb-20">
+    <section ref={membershipRef} className="py-12 bg-base-100 mb-20">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <h2 className="text-3xl font-poppins font-bold mb-4">
           Upgrade Your Membership
@@ -68,7 +69,7 @@ const MembershipPackages = () => {
                     pkg.name === "Platinum" && "bg-slate-600"
                   }`}
                 >
-                  {alreadyPurchased.packageName === pkg.name
+                  {alreadyPurchased?.packageName === pkg.name
                     ? "purchased"
                     : `Get ${pkg.name}`}
                 </Link>

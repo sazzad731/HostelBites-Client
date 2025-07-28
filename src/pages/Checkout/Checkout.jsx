@@ -167,7 +167,7 @@ const Checkout = () => {
         {/* Card Information */}
         <div className="p-6 rounded-xl shadow-sm">
           <Elements stripe={stripePromise}>
-            <CheckoutForm packageDetail={packageDetail} />
+            <CheckoutForm packageDetail={packageDetail} amount={total} />
           </Elements>
         </div>
       </div>

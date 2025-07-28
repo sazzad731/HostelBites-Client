@@ -10,6 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import usePurchased from "../../hooks/usePurchased";
+import { useNavigate } from "react-router";
 
 
 const ELEMENT_OPTIONS = {
@@ -28,15 +29,16 @@ const ELEMENT_OPTIONS = {
   },
 };
 
-const CheckoutForm = ({ packageDetail }) => {
+const CheckoutForm = ({ packageDetail, amount }) => {
   const { user } = useAuth();
   const elements = useElements();
   const stripe = useStripe();
   const axiosSecure = useAxiosSecure();
   const [cardBrand, setCardBrand] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-  const amountInCents = parseFloat(packageDetail?.price) * 100;
+  const amountInCents = parseFloat(amount) * 100;
   const alreadyPurchased = usePurchased();
+  const navigate = useNavigate();
 
   const cardBrandIcons = {
     visa: "https://img.icons8.com/color/48/000000/visa.png",
@@ -52,6 +54,10 @@ const CheckoutForm = ({ packageDetail }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if(!user){
+      return navigate('/login');
+    }
 
     if (!stripe || !elements) {
       return;
@@ -124,14 +130,13 @@ const CheckoutForm = ({ packageDetail }) => {
           const paymentData = {
             packageName: packageDetail.name,
             email: user?.email,
-            amount: packageDetail.price,
+            amount: parseFloat(amount),
             transactionId: result.paymentIntent.id,
             paymentMethod: result.paymentIntent.payment_method_types,
           };
           try {
-            const paymentRes = await axiosSecure.post("/payments", paymentData);
-
-            if (paymentRes.data.insertedId) {
+            const paymentRes = await axiosSecure.put("/payments", paymentData);
+            if (paymentRes.data.modifiedCount === 1) {
               Swal.fire({
                 title: "Payment successful",
                 text: `You successfully purchased ${packageDetail.name} package`,
@@ -139,7 +144,7 @@ const CheckoutForm = ({ packageDetail }) => {
               });
             }
           } catch (error) {
-            console.log("error from catch", error);
+            console.log(error);
             Swal.fire({
               title: error.response.data.message,
               text: error.message,
@@ -149,7 +154,7 @@ const CheckoutForm = ({ packageDetail }) => {
         }
       }
     }
-  };
+  }; 
   return (
     <div>
       <form onSubmit={handleSubmit} className="space-y-6 p-4">
