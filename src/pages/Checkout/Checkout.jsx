@@ -5,68 +5,68 @@ import { useQuery } from '@tanstack/react-query';
 import { FiCheck } from 'react-icons/fi';
 import { MdStarRate } from "react-icons/md";
 import useAuth from "../../hooks/useAuth"
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import CheckoutForm from './CheckoutForm';
+
+const stripePromise = loadStripe(`${import.meta.env.VITE_stripe_pk}`);
 
 const Checkout = () => {
   const { user } = useAuth();
   const [ total, setTotal ] = useState(0)
-  const { id } = useParams();
+  const { packageId } = useParams();
   const axiosSecure = useAxiosSecure();
 
   const { data: packageDetail } = useQuery({
     queryKey: ["packageDetail"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/package/${id}`);
+      const res = await axiosSecure.get(`/package/${packageId}`);
       setTotal((res.data.price * 0.05 + res.data.price).toFixed(2));
       return res.data;
     },
   });
-
-  console.log(packageDetail);
   
   return (
     <div className="grid lg:grid-cols-2 gap-12 min-h-screen">
       <div className="space-y-8">
-        <div className="p-6 rounded-xl shadow-sm">
-          <h2 className="text-2xl font-semibold mb-6">Selected Plan</h2>
-          <div
-            key={packageDetail?.name}
-            className={`card rounded-2xl shadow-md border hover:shadow-lg transition-all py-10 ${
-              packageDetail?.name === "Silver" &&
-              "bg-slate-200 border-slate-300"
-            } ${
-              packageDetail?.name === "Gold" &&
-              "bg-yellow-500/10 border-yellow-300"
-            } ${
-              packageDetail?.name === "Platinum" &&
-              "bg-slate-300 border-slate-300"
-            }`}
-          >
-            <div className="card-body">
-              <h3
-                className={`text-3xl ${
-                  packageDetail?.name === "Silver" && "text-slate-400"
-                } ${packageDetail?.name === "Gold" && "text-yellow-500"} ${
-                  packageDetail?.name === "Platinum" && "text-slate-600"
-                } font-poppins font-semibold mb-2`}
-              >
-                {packageDetail?.name}
-              </h3>
-              <p className="text-2xl font-bold mb-4">
-                ${packageDetail?.price}
-                <span className="text-sm font-semibold text-slate-500">
-                  /month
-                </span>
-              </p>
+        <h2 className="text-2xl font-semibold mb-6">Selected Plan</h2>
+        <div
+          key={packageDetail?.name}
+          className={`card rounded-2xl shadow-md border hover:shadow-lg transition-all py-10 ${
+            packageDetail?.name === "Silver" && "bg-slate-200 border-slate-300"
+          } ${
+            packageDetail?.name === "Gold" &&
+            "bg-yellow-500/10 border-yellow-300"
+          } ${
+            packageDetail?.name === "Platinum" &&
+            "bg-slate-300 border-slate-300"
+          }`}
+        >
+          <div className="card-body">
+            <h3
+              className={`text-3xl ${
+                packageDetail?.name === "Silver" && "text-slate-400"
+              } ${packageDetail?.name === "Gold" && "text-yellow-500"} ${
+                packageDetail?.name === "Platinum" && "text-slate-600"
+              } font-poppins font-semibold mb-2`}
+            >
+              {packageDetail?.name}
+            </h3>
+            <p className="text-2xl font-bold mb-4">
+              ${packageDetail?.price}
+              <span className="text-sm font-semibold text-slate-500">
+                /month
+              </span>
+            </p>
 
-              <ul className="text-left mb-6 font-inter space-y-2">
-                {packageDetail?.services.map((service, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <FiCheck className="text-primary mt-1" />
-                    <span>{service}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="text-left mb-6 font-inter space-y-2">
+              {packageDetail?.services.map((service, index) => (
+                <li key={index} className="flex items-start gap-2">
+                  <FiCheck className="text-primary mt-1" />
+                  <span>{service}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -128,13 +128,13 @@ const Checkout = () => {
 
       <div className="lg:sticky top-16 self-start">
         {/* Contact Information */}
-        <div className="p-6 rounded-xl shadow-sm">
+        <div className="p-6 rounded-xl shadow-sm mb-10">
           <h2 className="text-2xl font-semibold mb-6">Contact information</h2>
           <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label
                 className="block text-sm font-medium text-[#6B7280] mb-1.5"
-                for="name"
+                htmlFor="name"
               >
                 Full Name
               </label>
@@ -149,7 +149,7 @@ const Checkout = () => {
             <div>
               <label
                 className="block text-sm font-medium text-[#6B7280] mb-1.5"
-                for="email"
+                htmlFor="email"
               >
                 Email Address
               </label>
@@ -164,7 +164,12 @@ const Checkout = () => {
           </form>
         </div>
 
-        
+        {/* Card Information */}
+        <div className="p-6 rounded-xl shadow-sm">
+          <Elements stripe={stripePromise}>
+            <CheckoutForm packageDetail={packageDetail} />
+          </Elements>
+        </div>
       </div>
     </div>
   );

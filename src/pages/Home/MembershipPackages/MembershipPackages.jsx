@@ -2,8 +2,10 @@ import { Link } from "react-router";
 import { FiCheck } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import usePurchased from "../../../hooks/usePurchased";
 
 const MembershipPackages = () => {
+  const alreadyPurchased = usePurchased();
   const axiosSecure = useAxiosSecure();
   const { data: packages } = useQuery({
     queryKey: ["packages"],
@@ -28,9 +30,10 @@ const MembershipPackages = () => {
               key={pkg.name}
               className={`card rounded-2xl shadow-md border hover:shadow-lg transition-all py-10 ${
                 pkg.name === "Silver" && "bg-slate-200 border-slate-300"
-              } ${pkg.name === "Gold" && "bg-yellow-500/10 border-yellow-300"} ${
-                pkg.name === "Platinum" && "bg-slate-300 border-slate-300"
-              }`}>
+              } ${
+                pkg.name === "Gold" && "bg-yellow-500/10 border-yellow-300"
+              } ${pkg.name === "Platinum" && "bg-slate-300 border-slate-300"}`}
+            >
               <div className="card-body">
                 <h3
                   className={`text-3xl ${
@@ -65,7 +68,9 @@ const MembershipPackages = () => {
                     pkg.name === "Platinum" && "bg-slate-600"
                   }`}
                 >
-                  Get {pkg.name}
+                  {alreadyPurchased.packageName === pkg.name
+                    ? "purchased"
+                    : `Get ${pkg.name}`}
                 </Link>
               </div>
             </div>

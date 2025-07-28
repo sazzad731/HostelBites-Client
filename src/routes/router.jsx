@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
         Component: MealDetail,
       },
       {
-        path: "/checkout/:id",
+        path: "/checkout/:packageId",
         element: <PrivateRoute><Checkout/></PrivateRoute>
       },
       {
