@@ -7,7 +7,6 @@ import usePurchased from "../../../hooks/usePurchased";
 const MembershipPackages = ({ membershipRef }) => {
   const alreadyPurchased = usePurchased();
   const axiosSecure = useAxiosSecure();
-  console.log(alreadyPurchased)
   const { data: packages } = useQuery({
     queryKey: ["packages"],
     queryFn: async () => {

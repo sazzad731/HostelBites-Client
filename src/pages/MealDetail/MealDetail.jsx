@@ -6,7 +6,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import Rating from "react-rating";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import usePurchased from "../../hooks/usePurchased";
@@ -17,25 +17,35 @@ const MealDetail = () => {
   const { user } = useAuth();
   const navigate = useNavigate()
   const axiosSecure = useAxiosSecure();
-  const [ like, setLike ] = useState(0);
+  const [ like, setLike ] = useState(false);
+  const [ likeCount, setLikeCount ] = useState(0);
   const [ addedReview, setAddedReview ] = useState(false)
   const hasSubscribed = usePurchased()
   
   const { data: meal, isLoading } = useQuery({
-    queryKey: ["mealDetail", addedReview],
+    queryKey: ["mealDetail", addedReview, id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/meal/${id}`);
       return res.data;
     },
   });
 
+  useEffect(()=>{
+    if(!isLoading){
+      if (meal?.likes.includes(user?.email)) {
+        return setLike(true);
+      }
+    }
+  }, [ meal?.likes, user?.email, isLoading ])
+
   const handleLike = async()=>{
     if(!user){
       return navigate("/login")
     }
-    const res = await axiosSecure.patch("/like", { id });
+    const res = await axiosSecure.post("/like", { mealId: id, email: user?.email });
     if (res.data.modifiedCount === 1) {
-      setLike(like + 1);
+      setLike(true);
+      setLikeCount(1);
     }
   }
 
@@ -162,10 +172,11 @@ const MealDetail = () => {
               <div className="flex items-center gap-4">
                 <button
                   onClick={handleLike}
-                  className="btn btn-outline btn-primary flex items-center gap-2"
+                  disabled={like}
+                  className={`btn btn-outline btn-primary flex items-center gap-2`}
                 >
                   <FiThumbsUp />
-                  Like ({meal.likes + like})
+                  Like ({meal.likes.length + likeCount})
                 </button>
                 <button onClick={handleMealRequest} className="btn btn-primary">
                   Request Meal
