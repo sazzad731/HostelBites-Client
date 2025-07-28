@@ -71,7 +71,7 @@ const Checkout = () => {
         </div>
 
         {/* Order Summary */}
-        <div className="bg-[var(--card-bg)] p-6 rounded-xl shadow-sm">
+        <div className="bg-[var(--card-bg)] sm:p-6 p-3 rounded-xl shadow-sm">
           <h2 className="text-2xl font-semibold mb-6">Order Summary</h2>
           <div className="space-y-4">
             <div className="flex justify-between items-start">
@@ -128,7 +128,7 @@ const Checkout = () => {
 
       <div className="lg:sticky top-16 self-start">
         {/* Contact Information */}
-        <div className="p-6 rounded-xl shadow-sm mb-10">
+        <div className="p-3 sm:p-6 rounded-xl shadow-sm mb-10">
           <h2 className="text-2xl font-semibold mb-6">Contact information</h2>
           <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -165,7 +165,7 @@ const Checkout = () => {
         </div>
 
         {/* Card Information */}
-        <div className="p-6 rounded-xl shadow-sm">
+        <div className="p-3 sm:p-6 rounded-xl shadow-sm">
           <Elements stripe={stripePromise}>
             <CheckoutForm packageDetail={packageDetail} amount={total} />
           </Elements>

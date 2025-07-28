@@ -157,10 +157,10 @@ const CheckoutForm = ({ packageDetail, amount }) => {
   }; 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="space-y-6 p-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <h2 className="text-2xl font-semibold mb-3">Card Information</h2>
 
-        <div className="p-4 space-y-4 shadow-sm bg-white">
+        <div className="space-y-4 shadow-sm bg-white">
           {/* Card Number Row */}
           <div>
             <div className="border border-slate-300 p-2 rounded-lg flex items-center justify-between gap-2">
@@ -193,8 +193,8 @@ const CheckoutForm = ({ packageDetail, amount }) => {
           </div>
 
           {/* Expiry and CVC Row */}
-          <div className="flex items-center gap-4">
-            <div className="flex-1">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="sm:flex-1 w-full">
               <CardExpiryElement
                 id="expiry"
                 options={ELEMENT_OPTIONS}
@@ -205,7 +205,7 @@ const CheckoutForm = ({ packageDetail, amount }) => {
                   errorMessage?.message}
               </p>
             </div>
-            <div className="flex-1">
+            <div className="sm:flex-1 w-full">
               <CardCvcElement
                 id="cvc"
                 options={ELEMENT_OPTIONS}

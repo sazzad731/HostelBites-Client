@@ -7,6 +7,7 @@ import Register from "../pages/Register/Register";
 import Meals from "../pages/Meals/Meals";
 import PrivateRoute from "../routes/PrivateRoute"
 import Checkout from "../pages/Checkout/Checkout";
+import DashboardLayout from "../layouts/DashboardLayout";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -37,5 +38,9 @@ export const router = createBrowserRouter([
         Component: Register
       }
     ]
+  },
+  {
+    path: "/dashboard",
+    element: <PrivateRoute><DashboardLayout/></PrivateRoute>
   }
 ]);

@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer className="bg-primary-100">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
+        <div className="flex flex-col lg:flex-row justify-between items-center text-center md:text-left gap-8">
           <div className="flex items-center gap-3 text-slate-800">
             <Logo />
           </div>
@@ -40,7 +40,7 @@ const Footer = () => {
               Privacy Policy
             </a>
           </nav>
-          <p className="text-sm text-slate-500 mt-8 md:mt-0">
+          <p className="text-sm text-slate-500 md:mt-0">
             © 2024 HostelBites. All rights reserved.
           </p>
         </div>
