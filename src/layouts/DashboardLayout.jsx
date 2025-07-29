@@ -4,15 +4,24 @@ import { FiMenu, FiX } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/Logo/Logo";
 import { FaConciergeBell, FaMoneyCheckAlt, FaStar, FaUserCircle } from "react-icons/fa";
+import {
+  FaUserShield,
+  FaUsers,
+  FaUtensils,
+  FaMoneyBillWave,
+  FaClipboardList,
+} from "react-icons/fa";
+import useUserRole from "../hooks/useUserRole";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
   const [ open, setOpen ] = useState(false);
+  const { role } = useUserRole();
   const location = useLocation();
   const locationPathName = location.pathname.replace("/dashboard/", "");
 
   const menuItems = [
-    { name: "My Profile", path: "/dashboard", icon: <FaUserCircle /> },
+    { name: "My Profile", path: "my-profile", icon: <FaUserCircle /> },
     {
       name: "Requested Meals",
       path: "requested-meal",
@@ -26,6 +35,34 @@ const DashboardLayout = () => {
     },
   ];
 
+  const adminMenuItems = [
+    {
+      name: "Admin Profile",
+      path: "admin-profile",
+      icon: <FaUserShield />,
+    },
+    {
+      name: "Manage Users",
+      path: "manage-users",
+      icon: <FaUsers />,
+    },
+    {
+      name: "All Meals",
+      path: "all-meals",
+      icon: <FaUtensils />,
+    },
+    {
+      name: "Payment History",
+      path: "payment-history",
+      icon: <FaMoneyBillWave />,
+    },
+    {
+      name: "Meal Requests",
+      path: "meal-requests",
+      icon: <FaClipboardList />,
+    },
+  ];
+
   return (
     <div className="min-h-screen flex bg-base-200">
       {/* Sidebar */}
@@ -35,23 +72,39 @@ const DashboardLayout = () => {
         } transition-transform duration-300 lg:translate-x-0`}
       >
         <div className="flex justify-between items-center mb-10">
-          <Logo/>
+          <Logo />
           <button className="lg:hidden" onClick={() => setOpen(false)}>
             <FiX size={24} />
           </button>
         </div>
         <ul className="space-y-2">
-          {menuItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                to={item.path}
-                className={`flex items-center gap-2 p-2 rounded hover:bg-base-300 ${item.path === locationPathName && "bg-base-300"}`}
-              >
-                {item.icon}
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          {role === "admin"
+            ? adminMenuItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className={`flex items-center gap-2 p-2 rounded hover:bg-base-300 ${
+                      item.path === locationPathName && "bg-base-300"
+                    }`}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </Link>
+                </li>
+              ))
+            : menuItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.path}
+                    className={`flex items-center gap-2 p-2 rounded hover:bg-base-300 ${
+                      item.path === locationPathName && "bg-base-300"
+                    }`}
+                  >
+                    {item.icon}
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
         </ul>
       </div>
 
@@ -62,7 +115,9 @@ const DashboardLayout = () => {
           <button className="lg:hidden" onClick={() => setOpen(true)}>
             <FiMenu size={24} />
           </button>
-          <div className="text-sm font-medium">Welcome, {user?.displayName}</div>
+          <div className="text-sm font-medium">
+            Welcome, {user?.displayName}
+          </div>
         </div>
 
         {/* Main Content */}

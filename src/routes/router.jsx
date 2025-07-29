@@ -14,6 +14,7 @@ import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AdminProfile from "../pages/Dashboard/AdminPages/AdminProfile/AdminProfile";
 import AdminRoute from "./AdminRoute";
+import DashboardRedirect from "./DashboardRedirect";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -59,11 +60,11 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <PrivateRoute>
-            <MyProfile />
-          </PrivateRoute>
-        ),
+        element: <DashboardRedirect />,
+      },
+      {
+        path: "my-profile",
+        element: <PrivateRoute><MyProfile/></PrivateRoute>
       },
       {
         path: "requested-meal",
@@ -103,4 +104,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "*",
+    element: <div className="w-full min-h-screen flex items-center justify-center"><h3 className="text-3xl font-bold">404</h3></div>
+  }
 ]);
