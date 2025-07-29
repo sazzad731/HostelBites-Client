@@ -9,6 +9,7 @@ import PrivateRoute from "../routes/PrivateRoute"
 import Checkout from "../pages/Checkout/Checkout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
+import RequestedMeals from "../pages/Dashboard/RequestedMeals/RequestedMeals";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -16,11 +17,11 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Home
+        Component: Home,
       },
       {
         path: "/meals",
-        Component: Meals
+        Component: Meals,
       },
       {
         path: "/meal/:id",
@@ -28,26 +29,46 @@ export const router = createBrowserRouter([
       },
       {
         path: "/checkout/:packageId",
-        element: <PrivateRoute><Checkout/></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Checkout />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
-        Component: Login
+        Component: Login,
       },
       {
         path: "/register",
-        Component: Register
-      }
-    ]
+        Component: Register,
+      },
+    ],
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
-        Component: MyProfile
-      }
-    ]
-  }
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "requested-meal",
+        element: (
+          <PrivateRoute>
+            <RequestedMeals />
+          </PrivateRoute>
+        ),
+      },
+    ],
+  },
 ]);

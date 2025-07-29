@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useLocation } from "react-router";
 import { FiMenu, FiX } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/Logo/Logo";
@@ -8,18 +8,20 @@ import { FaConciergeBell, FaMoneyCheckAlt, FaStar, FaUserCircle } from "react-ic
 const DashboardLayout = () => {
   const { user } = useAuth();
   const [ open, setOpen ] = useState(false);
+  const location = useLocation();
+  const locationPathName = location.pathname.replace("/dashboard/", "");
 
   const menuItems = [
-    { name: "My Profile", path: "/dashboard/profile", icon: <FaUserCircle /> },
+    { name: "My Profile", path: "/dashboard", icon: <FaUserCircle /> },
     {
       name: "Requested Meals",
-      path: "/dashboard/requested-meals",
+      path: "requested-meal",
       icon: <FaConciergeBell />,
     },
-    { name: "My Reviews", path: "/dashboard/my-reviews", icon: <FaStar /> },
+    { name: "My Reviews", path: "my-reviews", icon: <FaStar /> },
     {
       name: "Payment History",
-      path: "/dashboard/payment-history",
+      path: "payment-history",
       icon: <FaMoneyCheckAlt />,
     },
   ];
@@ -43,7 +45,7 @@ const DashboardLayout = () => {
             <li key={item.name}>
               <Link
                 to={item.path}
-                className="flex items-center gap-2 p-2 rounded hover:bg-base-300"
+                className={`flex items-center gap-2 p-2 rounded hover:bg-base-300 ${item.path === locationPathName && "bg-base-300"}`}
               >
                 {item.icon}
                 {item.name}
