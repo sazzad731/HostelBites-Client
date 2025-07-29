@@ -12,6 +12,8 @@ import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import RequestedMeals from "../pages/Dashboard/RequestedMeals/RequestedMeals";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import AdminProfile from "../pages/Dashboard/AdminPages/AdminProfile/AdminProfile";
+import AdminRoute from "./AdminRoute";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -56,7 +58,7 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "/dashboard",
+        index: true,
         element: (
           <PrivateRoute>
             <MyProfile />
@@ -81,7 +83,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "payment-history",
-        element: <PrivateRoute><PaymentHistory/></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <PaymentHistory />
+          </PrivateRoute>
+        ),
+      },
+
+      // admin routes
+      {
+        path: "admin-profile",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AdminProfile />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
     ],
   },

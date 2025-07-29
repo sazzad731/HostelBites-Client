@@ -13,9 +13,10 @@ const MyProfile = () => {
     queryKey: [ "user", user?.email ],
     queryFn: async()=>{
       const res = await axiosSecure.get(`/user?email=${user?.email}`)
-      return res.data
+      return res.data.result
     }
   })
+
   
 
   // Badge color class mapping based on role
