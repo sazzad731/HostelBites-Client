@@ -11,6 +11,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import RequestedMeals from "../pages/Dashboard/RequestedMeals/RequestedMeals";
 import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -72,7 +73,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-reviews",
-        element: <PrivateRoute><MyReviews/></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <MyReviews />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "payment-history",
+        element: <PrivateRoute><PaymentHistory/></PrivateRoute>
       },
     ],
   },
