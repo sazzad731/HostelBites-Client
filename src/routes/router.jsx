@@ -8,6 +8,7 @@ import Meals from "../pages/Meals/Meals";
 import PrivateRoute from "../routes/PrivateRoute"
 import Checkout from "../pages/Checkout/Checkout";
 import DashboardLayout from "../layouts/DashboardLayout";
+import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -41,6 +42,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashboardLayout/></PrivateRoute>
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    children: [
+      {
+        path: "/dashboard",
+        Component: MyProfile
+      }
+    ]
   }
 ]);
