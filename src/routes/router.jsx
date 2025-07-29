@@ -10,6 +10,7 @@ import Checkout from "../pages/Checkout/Checkout";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyProfile from "../pages/Dashboard/MyProfile/MyProfile";
 import RequestedMeals from "../pages/Dashboard/RequestedMeals/RequestedMeals";
+import MyReviews from "../pages/Dashboard/MyReviews/MyReviews";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
             <RequestedMeals />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "my-reviews",
+        element: <PrivateRoute><MyReviews/></PrivateRoute>
       },
     ],
   },
