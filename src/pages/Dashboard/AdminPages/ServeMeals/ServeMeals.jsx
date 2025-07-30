@@ -4,13 +4,14 @@ import useUserRole from "../../../../hooks/useUserRole";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../../components/LoadingSpinner/LoadingSpinner";
 
 const ServeMeals = () => {
   const { role } = useUserRole();
   const [ searchTerm, setSearchTerm ] = useState("");
   const axiosSecure = useAxiosSecure();
   
-  const { data: requestedMeals = [], refetch } = useQuery({
+  const { data: requestedMeals = [], refetch, isLoading } = useQuery({
     queryKey: [ 'serveMeals', role, searchTerm ],
     queryFn: async()=>{
       const res = await axiosSecure.get(`/requested-meals?role=${role}&&search=${searchTerm}`);
@@ -30,6 +31,10 @@ const ServeMeals = () => {
       })
       refetch()
     }
+  }
+
+  if(isLoading){
+    return <LoadingSpinner/>
   }
 
 
