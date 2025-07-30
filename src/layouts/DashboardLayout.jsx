@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router";
 import { FiMenu, FiX } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
 import Logo from "../components/Logo/Logo";
-import { FaConciergeBell, FaMoneyCheckAlt, FaStar, FaUserCircle } from "react-icons/fa";
+import { FaConciergeBell, FaMoneyCheckAlt, FaRegClock, FaStar, FaUserCircle } from "react-icons/fa";
 import {
   FaUserShield,
   FaUsers,
@@ -60,6 +60,11 @@ const DashboardLayout = () => {
       name: "Serve Meals",
       path: "serve-meals",
       icon: <FaUtensils />,
+    },
+    {
+      name: "Upcoming Meals",
+      path: "add-upcoming-meals",
+      icon: <FaRegClock />,
     },
     {
       name: "Payment History",

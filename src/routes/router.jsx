@@ -19,6 +19,7 @@ import ManageUsers from "../pages/Dashboard/AdminPages/ManageUsers/ManageUsers";
 import AddMeals from "../pages/Dashboard/AdminPages/AddMeals/AddMeals";
 import AllMeals from "../pages/Dashboard/AdminPages/AllMeals/AllMeals";
 import ServeMeals from "../pages/Dashboard/AdminPages/ServeMeals/ServeMeals";
+import AddUpcomingMeals from "../pages/Dashboard/AdminPages/AddUpcomingMeals/AddUpcomingMeals";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -145,7 +146,17 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute>
-              <ServeMeals/>
+              <ServeMeals />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-upcoming-meals",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AddUpcomingMeals/>
             </AdminRoute>
           </PrivateRoute>
         ),
