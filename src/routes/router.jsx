@@ -15,6 +15,8 @@ import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 import AdminProfile from "../pages/Dashboard/AdminPages/AdminProfile/AdminProfile";
 import AdminRoute from "./AdminRoute";
 import DashboardRedirect from "./DashboardRedirect";
+import ManageUsers from "../pages/Dashboard/AdminPages/ManageUsers/ManageUsers";
+import AddMeals from "../pages/Dashboard/AdminPages/AddMeals/AddMeals";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -64,7 +66,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-profile",
-        element: <PrivateRoute><MyProfile/></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "requested-meal",
@@ -102,10 +108,34 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "manage-users",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "add-meals",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AddMeals/>
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   {
     path: "*",
-    element: <div className="w-full min-h-screen flex items-center justify-center"><h3 className="text-3xl font-bold">404</h3></div>
-  }
+    element: (
+      <div className="w-full min-h-screen flex items-center justify-center">
+        <h3 className="text-3xl font-bold">404</h3>
+      </div>
+    ),
+  },
 ]);

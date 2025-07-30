@@ -3,6 +3,7 @@ import React from 'react';
 
 const axiosSecure = axios.create({
   baseURL: `https://hostel-bites-server.vercel.app`,
+  // baseURL: `http://localhost:5000`,
 });
 
 const useAxiosSecure = () => {

@@ -47,6 +47,11 @@ const DashboardLayout = () => {
       icon: <FaUsers />,
     },
     {
+      name: "Add Meals",
+      path: "add-meals",
+      icon: <FaUtensils />,
+    },
+    {
       name: "All Meals",
       path: "all-meals",
       icon: <FaUtensils />,
@@ -109,7 +114,7 @@ const DashboardLayout = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 lg:ml-64">
+      <div className="w-full lg:ml-64">
         {/* Top navbar */}
         <div className="bg-base-100 shadow px-4 py-3 flex items-center justify-between lg:justify-end">
           <button className="lg:hidden" onClick={() => setOpen(true)}>
