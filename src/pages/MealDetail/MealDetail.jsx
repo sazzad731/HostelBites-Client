@@ -147,7 +147,7 @@ const MealDetail = () => {
                 Posted{" "}
                 {formatDistance(
                   new Date(),
-                  new Date(meal?.postTime?.split("-").join(", "))
+                  new Date(meal?.postTime)
                 )}
               </p>
               <div className="flex items-center gap-2">
