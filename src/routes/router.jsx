@@ -17,6 +17,7 @@ import AdminRoute from "./AdminRoute";
 import DashboardRedirect from "./DashboardRedirect";
 import ManageUsers from "../pages/Dashboard/AdminPages/ManageUsers/ManageUsers";
 import AddMeals from "../pages/Dashboard/AdminPages/AddMeals/AddMeals";
+import AllMeals from "../pages/Dashboard/AdminPages/AllMeals/AllMeals";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -123,7 +124,17 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AdminRoute>
-              <AddMeals/>
+              <AddMeals />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "all-meals",
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AllMeals/>
             </AdminRoute>
           </PrivateRoute>
         ),

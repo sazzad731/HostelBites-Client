@@ -58,12 +58,12 @@ const DashboardLayout = () => {
     },
     {
       name: "Payment History",
-      path: "payment-history",
+      path: "all-payment-history",
       icon: <FaMoneyBillWave />,
     },
     {
       name: "Meal Requests",
-      path: "meal-requests",
+      path: "all-meal-requests",
       icon: <FaClipboardList />,
     },
   ];
