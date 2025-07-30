@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import usePurchased from "../../hooks/usePurchased";
+import useLike from "../../hooks/useLike";
 
 
 const MealDetail = () => {
@@ -17,10 +18,9 @@ const MealDetail = () => {
   const { user } = useAuth();
   const navigate = useNavigate()
   const axiosSecure = useAxiosSecure();
-  const [ like, setLike ] = useState(false);
-  const [ likeCount, setLikeCount ] = useState(0);
   const [ addedReview, setAddedReview ] = useState(false)
   const hasSubscribed = usePurchased()
+  const { handleLike, like, setLike, likeCount } = useLike();
   
   const { data: meal, isLoading } = useQuery({
     queryKey: ["mealDetail", addedReview, id],
@@ -36,18 +36,8 @@ const MealDetail = () => {
         return setLike(true);
       }
     }
-  }, [ meal?.likes, user?.email, isLoading ])
+  }, [ meal?.likes, setLike, user?.email, isLoading ])
 
-  const handleLike = async()=>{
-    if(!user){
-      return navigate("/login")
-    }
-    const res = await axiosSecure.post("/like", { mealId: id, email: user?.email });
-    if (res.data.modifiedCount === 1) {
-      setLike(true);
-      setLikeCount(1);
-    }
-  }
 
 
   const handleMealRequest = async()=>{
@@ -171,7 +161,7 @@ const MealDetail = () => {
 
               <div className="flex items-center gap-4">
                 <button
-                  onClick={handleLike}
+                  onClick={()=>handleLike(meal?._id)}
                   disabled={like}
                   className={`btn btn-outline btn-primary flex items-center gap-2`}
                 >
