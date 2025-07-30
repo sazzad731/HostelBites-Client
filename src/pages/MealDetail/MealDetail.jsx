@@ -60,7 +60,7 @@ const MealDetail = () => {
     const requestedMealInfo = {
       userEmail: user?.email,
       mealId: id,
-      status: 'Pending'
+      status: 'pending'
     };
     try{
       const res = await axiosSecure.post("/meal-request", requestedMealInfo);

@@ -57,6 +57,11 @@ const DashboardLayout = () => {
       icon: <FaUtensils />,
     },
     {
+      name: "Serve Meals",
+      path: "serve-meals",
+      icon: <FaUtensils />,
+    },
+    {
       name: "Payment History",
       path: "all-payment-history",
       icon: <FaMoneyBillWave />,
