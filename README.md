@@ -1,12 +1,66 @@
-# React + Vite
+# HostelBites
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🎯 **Live Site:** [https://hostelbites-4aac7.web.app/]
 
-Currently, two official plugins are available:
+HostelBites is a web-based meal management platform tailored for hostel residents and administrators. This project includes features such as meal requests, reviews, payments, upcoming meals, and full admin control over content and users.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## Expanding the ESLint configuration
+- **React 19**
+- **Vite**
+- **Tailwind CSS** + DaisyUI
+- **Firebase Auth**
+- **Stripe Integration**
+- **React Router v7**
+- **React Hook Form**
+- **React Query**
+- **SweetAlert2**
+- **Lucide React Icons**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+
+## ⚙️ Scripts
+
+| Script         | Description                  |
+|----------------|------------------------------|
+| `npm run dev`  | Start development server     |
+| `npm run build`| Build for production         |
+| `npm run preview`| Preview production build |
+| `npm run lint` | Run ESLint checks            |
+
+## 🌟 Features
+
+### 🔐 Authentication
+- Firebase authentication with Google sign-in.
+
+### 🍽 Meals System
+- Add new meals
+- Upcoming meals and publishing
+- Meal requests with status tracking
+- Serve meals functionality (admin)
+
+### 💬 Reviews
+- Add and manage meal reviews
+- Admin can view and delete any review
+
+### 💳 Payments
+- Stripe payment integration
+- Payment history tracking
+
+### 📊 Admin Dashboard
+- User management (promote to admin)
+- Manage meals and reviews
+- Upcoming meals management
+
+## 📦 Dependencies
+
+> Major dependencies only
+
+- `react`, `react-dom`, `react-router`
+- `@tanstack/react-query`
+- `firebase`
+- `axios`, `sweetalert2`
+- `tailwindcss`, `daisyui`
+- `react-hook-form`, `react-icons`
+- `@stripe/react-stripe-js`, `@stripe/stripe-js`
