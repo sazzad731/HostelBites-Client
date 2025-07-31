@@ -4,6 +4,13 @@
 
 HostelBites is a web-based meal management platform tailored for hostel residents and administrators. This project includes features such as meal requests, reviews, payments, upcoming meals, and full admin control over content and users.
 
+
+## Admin username: Sazzad Hossen
+## Admin email: admin@gmail.com
+## Admin password: 123456
+
+
+
 ## 🚀 Tech Stack
 
 - **React 19**
