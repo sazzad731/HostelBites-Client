@@ -33,10 +33,6 @@ const ServeMeals = () => {
     }
   }
 
-  if(isLoading){
-    return <LoadingSpinner/>
-  }
-
 
   return (
     <div className="space-y-6">
@@ -57,8 +53,12 @@ const ServeMeals = () => {
       </div>
 
       <div className="overflow-x-auto rounded-lg">
-        {requestedMeals.length === 0 ? (
-          <h4 className="text-center text-xl text-black/60 mt-20">No data found</h4>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : requestedMeals.length === 0 ? (
+          <h4 className="text-center text-xl text-black/60 mt-20">
+            No data found
+          </h4>
         ) : (
           <table className="table table-zebra w-full">
             <thead className="bg-base-200 text-base-content">
