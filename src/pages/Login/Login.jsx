@@ -14,13 +14,15 @@ const Login = () => {
 
   const onSubmit = (data)=>{
     logIn(data.email, data.password)
-      .then(() =>{
+      .then((result) =>{
         Swal.fire({
           title: "Welcome back",
           text: "You login successfully",
           icon: "success",
         });
-        navigate(location.state || "/")
+        if(result.user){
+          navigate(location.state || "/")
+        }
       })
       .catch(err =>{
         Swal.fire({

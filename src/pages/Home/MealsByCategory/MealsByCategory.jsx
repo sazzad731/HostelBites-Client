@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
 import { useQuery } from '@tanstack/react-query';
-import useAxiosSecure from '../../../hooks/useAxiosSecure';
+import useAxiosSecureOrPublic from '../../../hooks/useAxiosSecureOrPublic';
 import LoadingSpinner from '../../../components/LoadingSpinner/LoadingSpinner';
 import Rating from 'react-rating';
 
 const MealsByCategory = () => {
   const [category, setCategory] = useState("")
-  const axiosSecure = useAxiosSecure();
+  const {axiosPublic} = useAxiosSecureOrPublic();
   const { data: meals, isLoading } = useQuery({
     queryKey: [ 'mealsData', category ],
     queryFn: async()=>{
-      const res = await axiosSecure.get(
+      const res = await axiosPublic.get(
         `/mealsByCategory?category=${category}`
       );
       return res.data

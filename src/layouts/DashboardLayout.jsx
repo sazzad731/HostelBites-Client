@@ -8,15 +8,13 @@ import {
   FaUserShield,
   FaUsers,
   FaUtensils,
-  FaMoneyBillWave,
-  FaClipboardList,
 } from "react-icons/fa";
-import useUserRole from "../hooks/useUserRole";
+import useDbUser from "../hooks/useDbUser";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
   const [ open, setOpen ] = useState(false);
-  const { role } = useUserRole();
+  const { role } = useDbUser();
   const location = useLocation();
   const locationPathName = location.pathname.replace("/dashboard/", "");
 
@@ -65,17 +63,7 @@ const DashboardLayout = () => {
       name: "Upcoming Meals",
       path: "add-upcoming-meals",
       icon: <FaRegClock />,
-    },
-    {
-      name: "Payment History",
-      path: "all-payment-history",
-      icon: <FaMoneyBillWave />,
-    },
-    {
-      name: "Meal Requests",
-      path: "all-meal-requests",
-      icon: <FaClipboardList />,
-    },
+    }
   ];
 
   return (

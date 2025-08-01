@@ -6,11 +6,11 @@ import AuthButtons from '../../components/AuthButtons/AuthButtons';
 import useAuth from '../../hooks/useAuth';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import useAxiosSecure from "../../hooks/useAxiosSecure"
+import useAxiosSecureOrPublic from "../../hooks/useAxiosSecureOrPublic"
 
 const Register = () => {
   const { createUser, updateUserProfile } = useAuth();
-  const axiosSecure = useAxiosSecure()
+  const {axiosSecure} = useAxiosSecureOrPublic();
   const navigate = useNavigate();
   const location = useLocation();
   const {

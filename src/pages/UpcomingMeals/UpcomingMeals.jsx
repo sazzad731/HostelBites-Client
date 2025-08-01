@@ -4,24 +4,30 @@ import { FaHeart, FaRegHeart } from "react-icons/fa6";
 import useLike from "../../hooks/useLike";
 import useAuth from "../../hooks/useAuth";
 import useDbUser from "../../hooks/useDbUser";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
+
 
 const UpcomingMeals = () => {
-  const {axiosSecure} = useAxiosSecureOrPublic();
+  const {axiosPublic} = useAxiosSecureOrPublic();
   const { user } = useAuth();
   const { handleLike, like } = useLike();
   const { badge } = useDbUser();
 
-  const { data: upcomingMeals = [] } = useQuery({
-    queryKey: ["getUpcomingMeals", like],
+  const { data: upcomingMeals = [], isLoading } = useQuery({
+    queryKey: ["getUpcomingMeals", like, user],
     queryFn: async () => {
-      const res = await axiosSecure.get("/upcoming-meals");
+      const res = await axiosPublic.get("/upcoming-meals");
       return res.data;
     },
   });
 
  const likedMeal = upcomingMeals.filter((meal) =>
    meal.likes.includes(user?.email)
- );
+  );
+  
+  if(isLoading){
+    return <LoadingSpinner/>;
+  }
 
   return (
     <div className="min-h-screen">

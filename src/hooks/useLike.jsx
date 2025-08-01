@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import useAuth from './useAuth';
-import usePurchased from './usePurchased';
-import useAxiosSecure from './useAxiosSecure';
+import useAxiosSecureOrPublic from './useAxiosSecureOrPublic';
 import { useLocation, useNavigate } from 'react-router';
+import useDbUser from './useDbUser';
 
 const useLike = () => {
   const [ like, setLike ] = useState(false);
   const [ likeCount, setLikeCount ] = useState(0);
   const { user } = useAuth();
-  const subscribed = usePurchased();
-  const axiosSecure = useAxiosSecure();
+  const { badge } = useDbUser();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   const navigate = useNavigate()
   const location = useLocation();
 
@@ -19,13 +19,13 @@ const useLike = () => {
     if (!user) {
       return navigate("/login");
     }
-    if (location.pathname === "/upcoming-meals" && subscribed.packageName !== "Silver" && subscribed.packageName !== "Gold" && subscribed.packageName !== "Platinum") {
+    if (location.pathname === "/upcoming-meals" && badge !== "Silver" && badge !== "Gold" && badge !== "Platinum") {
       return navigate("/", { state: { scrollTo: "membership" } });
     }
     const res = await axiosSecure.post("/like", {
       mealId,
       email: user?.email,
-      badge: subscribed.packageName || "Bronze",
+      badge: badge || "Bronze",
     });
     if (res.data.modifiedCount === 1) {
       setLike(true);

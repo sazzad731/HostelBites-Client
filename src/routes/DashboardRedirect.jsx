@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
-import useUserRole from "../hooks/useUserRole";
+import useDbUser from "../hooks/useDbUser";
 import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const DashboardRedirect = () => {
   const navigate = useNavigate();
   const { loading } = useAuth(); // you likely already have this
-  const { role, loadingRole } = useUserRole(); // assume this returns role
+  const { role, loadingRole } = useDbUser(); // assume this returns role
 
   useEffect(() => {
     if (!loading && !loadingRole) {

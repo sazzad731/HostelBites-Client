@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaUserShield, FaTruck, FaTrash, FaSearch } from "react-icons/fa";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../../../hooks/useAxiosSecureOrPublic";
 import { useState } from "react";
 
 const ManageUsers = () => {
   const [search, setSearch] = useState("");
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
 
   const { data: users = [] } = useQuery({
     queryKey: ["users", search],

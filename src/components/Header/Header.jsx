@@ -17,6 +17,7 @@ const Header = () => {
           text: "You successfully log out",
           icon: "success"
         })
+        localStorage.removeItem("token");
       })
       .catch(err =>
       {

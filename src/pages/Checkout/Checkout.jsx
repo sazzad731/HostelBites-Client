@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAxiosSecureOrPublic from '../../hooks/useAxiosSecureOrPublic';
 import { useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { FiCheck } from 'react-icons/fi';
@@ -15,7 +15,7 @@ const Checkout = () => {
   const { user } = useAuth();
   const [ total, setTotal ] = useState(0)
   const { packageId } = useParams();
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
 
   const { data: packageDetail } = useQuery({
     queryKey: ["packageDetail"],

@@ -2,13 +2,13 @@ import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../hooks/useAxiosSecureOrPublic";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router";
 
 const AuthButtons = () => {
   const { signInWithGoogle } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   const navigate = useNavigate();
   const location = useLocation()
 

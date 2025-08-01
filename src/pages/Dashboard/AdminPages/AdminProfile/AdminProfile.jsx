@@ -1,9 +1,9 @@
 import useAuth from "../../../../hooks/useAuth";
-import useUserRole from "../../../../hooks/useUserRole";
+import useDbUser from "../../../../hooks/useDbUser";
 
 const AdminProfile = () => {
   const { user } = useAuth();
-  const { role, numberOfMeal } = useUserRole();
+  const { role, numberOfMeal } = useDbUser();
 
   return (
     <div className="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md">

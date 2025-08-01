@@ -1,16 +1,16 @@
 import { Link } from "react-router";
 import { FiCheck } from "react-icons/fi";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../../hooks/useAxiosSecureOrPublic";
 import usePurchased from "../../../hooks/usePurchased";
 
 const MembershipPackages = ({ membershipRef }) => {
   const alreadyPurchased = usePurchased();
-  const axiosSecure = useAxiosSecure();
+  const {axiosPublic} = useAxiosSecureOrPublic();
   const { data: packages } = useQuery({
     queryKey: ["packages"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/packages");
+      const res = await axiosPublic.get("/packages");
       return res.data;
     },
   });

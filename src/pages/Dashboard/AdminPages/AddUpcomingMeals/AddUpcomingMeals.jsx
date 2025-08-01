@@ -2,13 +2,13 @@ import { useState } from "react";
 import { FaPlus, FaUpload } from "react-icons/fa";
 import Modal from "./Modal";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../../../hooks/useAxiosSecureOrPublic";
 import Swal from "sweetalert2";
 
 const AddUpcomingMeals = () => {
   const [ showModal, setShowModal ] = useState(false);
   const [ uploaded, setUploaded ] = useState(false);
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   
   const { data: upcomingMeals = [], refetch } = useQuery({
     queryKey: ["upcomingMeals", uploaded===true],

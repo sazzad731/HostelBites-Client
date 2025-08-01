@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { FaSearch, FaUtensils } from "react-icons/fa";
-import useUserRole from "../../../../hooks/useUserRole";
+import useDbUser from "../../../../hooks/useDbUser";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../../../hooks/useAxiosSecureOrPublic";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../../../../components/LoadingSpinner/LoadingSpinner";
 
 const ServeMeals = () => {
-  const { role } = useUserRole();
+  const { role } = useDbUser();
   const [ searchTerm, setSearchTerm ] = useState("");
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   
   const { data: requestedMeals = [], refetch, isLoading } = useQuery({
     queryKey: [ 'serveMeals', role, searchTerm ],

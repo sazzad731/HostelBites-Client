@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaStar } from "react-icons/fa";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../../hooks/useAxiosSecureOrPublic";
 import LoadingSpinner from "../../../components/LoadingSpinner/LoadingSpinner";
 import { Link } from "react-router";
 
 const MyReviews = () => {
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
 
   const { data: reviews = [], isLoading } = useQuery({
     queryKey: ["my-reviews", user?.email],

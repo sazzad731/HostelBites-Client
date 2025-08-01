@@ -7,7 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 import React, {  useState } from 'react';
 import useAuth from "../../hooks/useAuth";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../hooks/useAxiosSecureOrPublic";
 import Swal from "sweetalert2";
 import usePurchased from "../../hooks/usePurchased";
 import { useNavigate } from "react-router";
@@ -33,7 +33,7 @@ const CheckoutForm = ({ packageDetail, amount }) => {
   const { user } = useAuth();
   const elements = useElements();
   const stripe = useStripe();
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   const [cardBrand, setCardBrand] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const amountInCents = parseFloat(amount) * 100;
@@ -136,7 +136,7 @@ const CheckoutForm = ({ packageDetail, amount }) => {
           };
           try {
             const paymentRes = await axiosSecure.put("/payments", paymentData);
-            if (paymentRes.data.modifiedCount === 1) {
+            if (paymentRes.data.modifiedCount === 1 || paymentRes.data.upsertedId) {
               Swal.fire({
                 title: "Payment successful",
                 text: `You successfully purchased ${packageDetail.name} package`,

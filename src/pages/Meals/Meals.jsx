@@ -2,7 +2,7 @@ import { IoMdSearch } from "react-icons/io";
 import { Link } from "react-router";
 import { FiShoppingCart } from "react-icons/fi";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../hooks/useAxiosSecureOrPublic";
 import { useState } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -12,7 +12,7 @@ const Meals = () => {
   const [category, setCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const limit = 6;
-  const axiosSecure = useAxiosSecure();
+  const {axiosPublic} = useAxiosSecureOrPublic();
 
   const {
     data,
@@ -22,7 +22,7 @@ const Meals = () => {
   } = useInfiniteQuery({
     queryKey: ["meals", searchString, category, priceRange],
     queryFn: async ({ pageParam = 1 }) => {
-      const res = await axiosSecure.get(
+      const res = await axiosPublic.get(
         `/meals?page=${pageParam}&limit=${limit}&search=${searchString}&category=${category}&priceRange=${priceRange}`
       );
       return res.data;

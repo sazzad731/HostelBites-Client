@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import { FiThumbsUp } from "react-icons/fi";
 import { formatDistance } from "date-fns";
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../hooks/useAxiosSecureOrPublic";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import Rating from "react-rating";
 import { FaStar, FaRegStar, FaStarHalfAlt } from "react-icons/fa";
@@ -17,7 +17,7 @@ const MealDetail = () => {
   const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate()
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure, axiosPublic} = useAxiosSecureOrPublic();
   const [ addedReview, setAddedReview ] = useState(false)
   const hasSubscribed = usePurchased()
   const { handleLike, like, setLike, likeCount } = useLike();
@@ -25,7 +25,7 @@ const MealDetail = () => {
   const { data: meal, isLoading } = useQuery({
     queryKey: ["mealDetail", addedReview, id],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/meal/${id}`);
+      const res = await axiosPublic.get(`/meal/${id}`);
       return res.data;
     },
   });

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { FaEye, FaEdit, FaTrashAlt } from "react-icons/fa";
-import useAxiosSecure from "../../../../hooks/useAxiosSecure";
+import useAxiosSecureOrPublic from "../../../../hooks/useAxiosSecureOrPublic";
 import { Link } from "react-router";
 import { useState } from "react";
 
 const AllMeals = () => {
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   const [ sortOption, setSortOption ] = useState("");
 
   const { data: meals = [] } = useQuery({

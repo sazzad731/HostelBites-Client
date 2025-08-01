@@ -1,22 +1,11 @@
 import React from "react";
 import { BadgeCheck } from "lucide-react";
 import useAuth from "../../../hooks/useAuth";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import useDbUser from "../../../hooks/useDbUser";
 
 const MyProfile = () => {
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
-
-
-  const { data: dbUser } = useQuery({
-    queryKey: [ "user", user?.email ],
-    queryFn: async()=>{
-      const res = await axiosSecure.get(`/user?email=${user?.email}`)
-      return res.data.result
-    }
-  })
-
+  const { badge } = useDbUser();
   
 
   // Badge color class mapping based on role
@@ -48,10 +37,10 @@ const MyProfile = () => {
 
         <div className="mt-4">
           <div
-            className={`${badgeStyles[dbUser?.badge]} gap-1 text-sm px-4 py-2`}
+            className={`${badgeStyles[badge]} gap-1 text-sm px-4 py-2`}
           >
             <BadgeCheck size={16} />
-            {dbUser?.badge} Badge
+            {badge} Badge
           </div>
         </div>
       </div>

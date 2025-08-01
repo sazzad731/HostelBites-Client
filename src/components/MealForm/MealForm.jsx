@@ -2,12 +2,12 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
+import useAxiosSecureOrPublic from '../../hooks/useAxiosSecureOrPublic';
 import Swal from 'sweetalert2';
 
 const MealForm = ({ postUrl, button, setShowModal, setUploaded }) => {
   const { user } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  const {axiosSecure} = useAxiosSecureOrPublic();
   const {
     register,
     handleSubmit,
@@ -48,9 +48,13 @@ const MealForm = ({ postUrl, button, setShowModal, setUploaded }) => {
               showConfirmButton: false,
               timer: 1500,
             });
-            setUploaded(true)
+            if (setUploaded) {
+              setUploaded(true);
+            }
             reset();
-            setShowModal(false);
+            if(setShowModal){
+              setShowModal(false);
+            }
           }
         } catch (error) {
           Swal.fire({
