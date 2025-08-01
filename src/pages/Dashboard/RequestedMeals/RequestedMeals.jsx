@@ -46,7 +46,7 @@ const RequestedMeals = () => {
                 <td>
                   <span
                     className={`badge ${
-                      meal.status === "Delivered"
+                      meal.status === "delivered"
                         ? "badge-success"
                         : "badge-warning"
                     }`}
@@ -55,7 +55,7 @@ const RequestedMeals = () => {
                   </span>
                 </td>
                 <td>
-                  {meal.status !== "Delivered" ? (
+                  {meal.status !== "delivered" ? (
                     <button className="btn btn-sm btn-error text-white">
                       Cancel
                     </button>
