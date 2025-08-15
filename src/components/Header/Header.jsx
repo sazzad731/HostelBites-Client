@@ -48,7 +48,7 @@ const Header = () => {
   );
 
   return (
-    <header className="navbar bg-base-100 shadow-md font-inter max-w-7xl mx-auto mb-10 rounded-xl">
+    <nav className="navbar max-w-7xl mx-auto">
       {/* Start */}
       <div className="navbar-start">
         {/* Mobile burger */}
@@ -130,7 +130,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </header>
+    </nav>
   );
 };
 
