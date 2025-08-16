@@ -21,6 +21,7 @@ import AllMeals from "../pages/Dashboard/AdminPages/AllMeals/AllMeals";
 import ServeMeals from "../pages/Dashboard/AdminPages/ServeMeals/ServeMeals";
 import AddUpcomingMeals from "../pages/Dashboard/AdminPages/AddUpcomingMeals/AddUpcomingMeals";
 import UpcomingMeals from "../pages/UpcomingMeals/UpcomingMeals";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -170,10 +171,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: (
-      <div className="w-full min-h-screen flex items-center justify-center">
-        <h3 className="text-3xl font-bold">404</h3>
-      </div>
-    ),
+    element: <ErrorPage/>,
   },
 ]);
