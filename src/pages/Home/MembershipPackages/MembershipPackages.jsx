@@ -15,9 +15,9 @@ const MembershipPackages = ({ membershipRef }) => {
     },
   });
   return (
-    <section id="pricing" ref={membershipRef} className="py-12 bg-base-100 mb-20">
+    <section id="pricing" ref={membershipRef} className="bg-base-100 mt-36">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl font-poppins font-bold mb-4">
+        <h2 className="text-3xl sm:text-4xl font-poppins font-bold mb-4">
           Upgrade Your Membership
         </h2>
         <p className="mb-10 text-gray-600 font-inter">

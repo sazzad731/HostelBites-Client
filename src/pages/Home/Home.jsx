@@ -5,6 +5,7 @@ import HostelHighlights from './HostelHighlights/HostelHighlights';
 import MembershipPackages from './MembershipPackages/MembershipPackages';
 import { useLocation } from 'react-router';
 import CustomersReview from './CustomersReview/CustomersReview';
+import TeamSection from './TeamSection/TeamSection';
 
 const Home = () => {
   const membershipRef = useRef();
@@ -21,7 +22,8 @@ const Home = () => {
       <MealsByCategory />
       <HostelHighlights />
       <MembershipPackages membershipRef={membershipRef} />
-      <CustomersReview/>
+      <CustomersReview />
+      <TeamSection/>
     </>
   );
 };

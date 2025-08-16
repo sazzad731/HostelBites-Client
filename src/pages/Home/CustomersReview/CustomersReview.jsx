@@ -40,30 +40,30 @@ const CustomersReview = () => {
   ];
 
   return (
-    <div class="mb-20">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+    <div className="mt-36">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
           What our customers say
         </h2>
-        <p class="mt-4 text-lg text-neutral-500">
+        <p className="mt-4 text-lg text-neutral-500">
           Real stories from real food lovers.
         </p>
       </div>
-      <div class="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {reviews.map((review) => (
-          <div key={review.id} class="flex flex-col items-center rounded-lg bg-white p-6 shadow-lg border-[1px] border-neutral-200">
-            <div class="flex-shrink-0">
+          <div key={review.id} className="flex flex-col items-center rounded-lg bg-white p-6 shadow-lg border-[1px] border-neutral-200">
+            <div className="flex-shrink-0">
               <img
                 alt={review.name + " " + "Profile picture"}
-                class="h-20 w-20 rounded-full object-cover"
+                className="h-20 w-20 rounded-full object-cover"
                 src={review.image}
               />
             </div>
-            <div class="mt-4 flex items-center text-center flex-col justify-between">
-              <p class="text-xl font-bold text-[var(--neutral-800)]">
+            <div className="mt-4 flex items-center text-center flex-col justify-between">
+              <p className="text-xl font-bold text-neutral-800">
                 {review.name}
               </p>
-              <div class="mt-2 flex items-center gap-1">
+              <div className="mt-2 flex items-center gap-1">
                 <Rating
                   emptySymbol={<FaRegStar className="text-primary" size={18} />}
                   fullSymbol={
@@ -77,7 +77,7 @@ const CustomersReview = () => {
                 />
               </div>
               <blockquote>
-                <p class="text-base text-neutral-500">
+                <p className="text-base text-neutral-500">
                   {review.comment}
                 </p>
               </blockquote>

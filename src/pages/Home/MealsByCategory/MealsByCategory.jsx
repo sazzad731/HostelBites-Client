@@ -21,7 +21,7 @@ const MealsByCategory = () => {
   
 
   return (
-    <section className="py-16 sm:py-24">
+    <section className="my-16 sm:mt-36">
       <div className="mb-8 border-b border-black/20">
         <div className="flex justify-center -mb-px space-x-6 sm:space-x-8">
           <button

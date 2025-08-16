@@ -17,7 +17,7 @@ const Banner = () => {
 
   return (
     <div
-      className="hero min-h-[40rem] rounded-2xl"
+      className="hero md:min-h-[40rem] min-h-[30rem] rounded-2xl"
       style={{
         backgroundImage:
           "url(https://lh3.googleusercontent.com/aida-public/AB6AXuCT8LZjGg1MpCaXYIZ7__NRPDQsJ28xF3vaDEznNOJKrK5ROw6qSSujl7DLu3wta-X2oVX911SwERdKruHH5PzQIA9VSGSdUQIKi5HUEEdnsoHQNVgQfjTLPVT4hUT6B3rYSgy2Lu59gStHjszWskNny1PeKlxTf2gyK2SVQfLP9-smP__r5GCXqyQmvIkKrJGiQdW8Zgdzn5qC_AVDfjQeI9gleMK8aiFMxJ5mmgOyMYbjXHLYIesbvBHxOvrzi2arVr0sI4bIzevB)",
