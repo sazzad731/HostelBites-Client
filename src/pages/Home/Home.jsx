@@ -6,6 +6,7 @@ import MembershipPackages from './MembershipPackages/MembershipPackages';
 import { useLocation } from 'react-router';
 import CustomersReview from './CustomersReview/CustomersReview';
 import TeamSection from './TeamSection/TeamSection';
+import Newsletter from './Newsletter/Newsletter';
 
 const Home = () => {
   const membershipRef = useRef();
@@ -23,7 +24,8 @@ const Home = () => {
       <HostelHighlights />
       <MembershipPackages membershipRef={membershipRef} />
       <CustomersReview />
-      <TeamSection/>
+      <TeamSection />
+      <Newsletter/>
     </>
   );
 };
