@@ -3,16 +3,20 @@ import { Link } from "react-router";
 import { FiShoppingCart } from "react-icons/fi";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import useAxiosSecureOrPublic from "../../hooks/useAxiosSecureOrPublic";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { SearchContext } from "../../contexts/SearchContext";
+
 
 const Meals = () => {
   const [searchString, setSearchString] = useState("");
   const [category, setCategory] = useState("");
   const [priceRange, setPriceRange] = useState("");
   const limit = 6;
-  const {axiosPublic} = useAxiosSecureOrPublic();
+  const { axiosPublic } = useAxiosSecureOrPublic();
+  const { search, setSearch } = useContext(SearchContext); // value from banner search field
+  
 
   const {
     data,
@@ -23,8 +27,9 @@ const Meals = () => {
     queryKey: ["meals", searchString, category, priceRange],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await axiosPublic.get(
-        `/meals?page=${pageParam}&limit=${limit}&search=${searchString}&category=${category}&priceRange=${priceRange}`
+        `/meals?page=${pageParam}&limit=${limit}&search=${searchString || search}&category=${category}&priceRange=${priceRange}`
       );
+      setSearch("")
       return res.data;
     },
     getNextPageParam: (lastPage, allPages) => {
@@ -51,6 +56,7 @@ const Meals = () => {
               />
               <input
                 onChange={(e) => setSearchString(e.target.value)}
+                defaultValue={search}
                 className="w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-4 text-gray-800 placeholder-gray-400 shadow-sm focus:outline-primary focus:ring-primary"
                 placeholder="Search meals..."
                 type="search"

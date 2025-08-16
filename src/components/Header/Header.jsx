@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import Logo from '../Logo/Logo';
 import useAuth from '../../hooks/useAuth';
 import Swal from 'sweetalert2';
@@ -31,7 +31,6 @@ const Header = () => {
 
 
 
-
   // ✅ Navigation links in one array
   const navItems = (
     <>
@@ -43,6 +42,9 @@ const Header = () => {
       </li>
       <li>
         <NavLink to="/upcoming-meals">Upcoming Meals</NavLink>
+      </li>
+      <li>
+        <a href='#pricing'>Pricing</a>
       </li>
     </>
   );
