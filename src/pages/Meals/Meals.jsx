@@ -7,29 +7,28 @@ import { useContext, useState } from "react";
 import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SearchContext } from "../../contexts/SearchContext";
+import { FaSortAmountDownAlt, FaSortAmountUp } from "react-icons/fa";
 
 
 const Meals = () => {
   const [searchString, setSearchString] = useState("");
   const [category, setCategory] = useState("");
-  const [priceRange, setPriceRange] = useState("");
+  const [ priceRange, setPriceRange ] = useState("");
+  const [ asceDescPrice, setAsceDescPrice ] = useState("1"); // sort by ascending or descending price
   const limit = 6;
   const { axiosPublic } = useAxiosSecureOrPublic();
   const { search, setSearch } = useContext(SearchContext); // value from banner search field
   
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-  } = useInfiniteQuery({
-    queryKey: ["meals", searchString, category, priceRange],
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ["meals", searchString, category, priceRange, asceDescPrice],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await axiosPublic.get(
-        `/meals?page=${pageParam}&limit=${limit}&search=${searchString || search}&category=${category}&priceRange=${priceRange}`
+        `/meals?page=${pageParam}&limit=${limit}&search=${
+          searchString || search
+        }&category=${category}&priceRange=${priceRange}&price=${asceDescPrice}`
       );
-      setSearch("")
+      setSearch("");
       return res.data;
     },
     getNextPageParam: (lastPage, allPages) => {
@@ -46,7 +45,9 @@ const Meals = () => {
       <div>
         {/* Filters */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">Meals</h1>
+          <h1 className="text-3xl font-bold text-gray-800 text-center">
+            Meals
+          </h1>
 
           <div className="mt-16 flex flex-col gap-4 sm:flex-row">
             <div className="relative flex-1">
@@ -85,6 +86,16 @@ const Meals = () => {
                 <option>$30-$60</option>
                 <option>$60-$100</option>
               </select>
+              <button
+                onClick={() => asceDescPrice === "1" ? setAsceDescPrice("-1") : setAsceDescPrice("1")}
+                className="btn btn-primary text-xl"
+              >
+                {asceDescPrice === "1" ? (
+                  <FaSortAmountDownAlt />
+                ) : (
+                  <FaSortAmountUp />
+                )}
+              </button>
             </div>
           </div>
         </div>
