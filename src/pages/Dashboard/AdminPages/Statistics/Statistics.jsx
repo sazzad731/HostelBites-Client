@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  LineChart,
+  AreaChart,
   Line,
   XAxis,
   YAxis,
@@ -88,9 +88,14 @@ const Statistics = () => {
           <p className="text-sm">Last 30 Days</p>
           <div className="mt-4 h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart
+              <AreaChart
                 data={lineData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                margin={{
+                  top: 10,
+                  right: 30,
+                  left: 0,
+                  bottom: 0,
+                }}
               >
                 {/* 1. FIRST: Define gradient - MUST come before Area */}
                 <defs>
@@ -101,31 +106,13 @@ const Statistics = () => {
                     x2="0"
                     y2="1"
                   >
-                    <stop offset="0%" stopColor="#ED582A" stopOpacity={0.8} />
-                    <stop offset="90%" stopColor="#ED582A" stopOpacity={0.1} />
+                    <stop offset="0%" stopColor="#ED582A" stopOpacity={0.3} />
+                    {/* <stop offset="90%" stopColor="#ED582A" stopOpacity={0.1} /> */}
                     <stop offset="100%" stopColor="#ED582A" stopOpacity={0} />
                   </linearGradient>
                 </defs>
 
                 {/* 2. Chart components */}
-                <CartesianGrid
-                  strokeDasharray="3 3"
-                  vertical={false}
-                  stroke="#f0f0f0"
-                />
-                <XAxis
-                  dataKey="name"
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: "#6b7280", fontSize: 12 }}
-                />
-                <YAxis
-                  axisLine={false}
-                  tickLine={false}
-                  domain={[0, 600]}
-                  ticks={[0, 150, 300, 450, 600]}
-                  tick={{ fill: "#6b7280", fontSize: 12 }}
-                />
                 <Tooltip />
 
                 {/* 3. Area with gradient - MUST come after defs */}
@@ -144,10 +131,9 @@ const Statistics = () => {
                   dataKey="value"
                   stroke="#ED582A"
                   strokeWidth={3}
-                  dot={{ fill: "#ED582A", strokeWidth: 2, r: 5 }}
-                  activeDot={{ r: 8 }}
+                  dot={false}
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>
@@ -174,7 +160,7 @@ const Statistics = () => {
             </ResponsiveContainer>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-3xl font-bold text-text-primary">70%</span>
-              <span className="text-sm text-text-secondary">Weekly</span>
+              <span className="text-sm">Weekly</span>
             </div>
           </div>
         </div>
@@ -194,9 +180,7 @@ const Statistics = () => {
             { name: "Seafood", percent: 25 },
           ].map((meal, i) => (
             <div key={i} className="space-y-2">
-              <p className="text-sm font-medium text-text-secondary">
-                {meal.name}
-              </p>
+              <p className="text-sm font-medium">{meal.name}</p>
               <div className="h-2 w-full rounded-full bg-bg-base-200">
                 <div
                   className="h-2 rounded-full bg-[var(--brand-primary)]"
