@@ -10,6 +10,7 @@ import {
   FaUtensils,
 } from "react-icons/fa";
 import useDbUser from "../hooks/useDbUser";
+import { ChartSpline } from "lucide-react";
 
 const DashboardLayout = () => {
   const { user } = useAuth();
@@ -40,6 +41,11 @@ const DashboardLayout = () => {
       icon: <FaUserShield />,
     },
     {
+      name: "Statistics",
+      path: "statistics",
+      icon: <ChartSpline />,
+    },
+    {
       name: "Manage Users",
       path: "manage-users",
       icon: <FaUsers />,
@@ -63,7 +69,7 @@ const DashboardLayout = () => {
       name: "Upcoming Meals",
       path: "add-upcoming-meals",
       icon: <FaRegClock />,
-    }
+    },
   ];
 
   return (

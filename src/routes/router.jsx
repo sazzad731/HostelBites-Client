@@ -22,6 +22,7 @@ import ServeMeals from "../pages/Dashboard/AdminPages/ServeMeals/ServeMeals";
 import AddUpcomingMeals from "../pages/Dashboard/AdminPages/AddUpcomingMeals/AddUpcomingMeals";
 import UpcomingMeals from "../pages/UpcomingMeals/UpcomingMeals";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import Statistics from "../pages/Dashboard/AdminPages/Statistics/Statistics";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
             <MyProfile />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "statistics",
+        element: <PrivateRoute><Statistics/></PrivateRoute>
       },
       {
         path: "requested-meal",
@@ -171,6 +176,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "*",
-    element: <ErrorPage/>,
+    element: <ErrorPage />,
   },
 ]);

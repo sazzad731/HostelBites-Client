@@ -18,3 +18,13 @@
   default: true;
   --color-primary: #ED582A;
 }
+
+
+
+/* Add this to your global CSS */
+.recharts-wrapper {
+  overflow: visible !important;
+}
+.recharts-surface {
+  overflow: visible !important;
+}
