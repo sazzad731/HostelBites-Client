@@ -2,15 +2,9 @@ import React from "react";
 import {
   AreaChart,
   Line,
-  XAxis,
-  YAxis,
   Tooltip,
   ResponsiveContainer,
   Area,
-  PieChart,
-  Pie,
-  Cell,
-  CartesianGrid,
 } from "recharts";
 import { ShoppingCart, Users, DollarSign, UserPlus } from "lucide-react";
 
@@ -24,7 +18,7 @@ const Statistics = () => {
   ];
 
   return (
-    <div className="">
+    <div>
       {/* Header */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <h2 className="text-3xl font-bold text-primary">Dashboard Overview</h2>
@@ -73,7 +67,7 @@ const Statistics = () => {
 
       {/* Charts Section */}
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Line Chart */}
+        {/* Area Chart */}
         <div className="card rounded-xl p-6 shadow-sm lg:col-span-2">
           <h3 className="text-lg font-semibold text-primary">
             Weekly Order Trends
@@ -99,8 +93,7 @@ const Statistics = () => {
                     x2="0"
                     y2="1"
                   >
-                    <stop offset="0%" stopColor="#ED582A" stopOpacity={0.3} />
-                    {/* <stop offset="90%" stopColor="#ED582A" stopOpacity={0.1} /> */}
+                    <stop offset="0%" stopColor="#ED582A" stopOpacity={0.1} />
                     <stop offset="100%" stopColor="#ED582A" stopOpacity={0} />
                   </linearGradient>
                 </defs>
@@ -133,30 +126,13 @@ const Statistics = () => {
 
         {/* Donut Chart */}
         <div className="card rounded-xl p-6 shadow-sm flex items-center justify-center">
-          <div className="relative h-64 w-64">
-            {/* <ResponsiveContainer>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={70}
-                  outerRadius={100}
-                  dataKey="value"
-                  stroke="none"
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={index} fill={entry.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer> */}
+          <div className="relative">
             <div
-              className="radial-progress text-primary"
+              className="radial-progress text-primary z-50"
               style={{
                 "--value": "70",
                 "--size": "12rem",
-                "--thickness": "2rem",
+                "--thickness": "1rem",
               }}
               aria-valuenow={70}
               role="progressbar"
@@ -164,6 +140,8 @@ const Statistics = () => {
               <span className="text-sm text-neutral-800">Weekly</span>
               <span className="text-3xl font-bold text-primary">70%</span>
             </div>
+            <div className="absolute top-0 left-0 rounded-full w-48 h-48 bg-primary/20"></div>
+            <div className="absolute top-0 left-0 rounded-full w-48 h-48 bg-white scale-84"></div>
           </div>
         </div>
       </div>
